@@ -1,0 +1,533 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    main{
+        padding: 2rem 1rem;
+    }
+    /* .form-group select{
+        width: -webkit-fill-available;
+    } */
+    .switch {
+    position: relative;
+    display: inline-block;
+    width: 52px;
+    height: 28px;
+    }
+
+    .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+    }
+
+    .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    }
+
+    .slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 2px;
+    bottom: 3px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    }
+    /* .slider {
+    background-color: #fff;
+    } */
+
+    input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+    }
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+    border-radius: 32px;
+    background-color: #ccc;
+    }
+
+    .slider.round:before {
+    border-radius: 50%;
+    }
+    .submit_btn, .submitunit_btn {
+        background: #c6aa589e;
+        border: 1px solid white;
+        border-radius: 4px;
+        color: white;
+        font-weight: 600;
+        padding: 0.5rem 1rem;
+    }
+    .submit_btn:hover, .submitunit_btn:hover{
+        background: #C6AA58;
+    }
+    input:read-only{
+        background: #fff !important;
+    }
+    .amount_summary{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        margin-bottom: 1rem;
+    }
+    .amt_head_label label{
+        font-size: 1rem;
+        /* font-weight: 500; */
+    }
+</style>
+<div class="page-content">
+    <div class="card radius-15" style="background-color: #ddddbeed;">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12 col-lg-12 col-xl-12">
+                    <div class="card" style="background-color: #eae9c4;">
+                        <div class="row no-gutters">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8 mt-4 mb-4">
+                                <center>
+                                    <h4 class="card-title text-dark">ADD PURCHASE</h4>
+                                </center>
+                            </div>
+                            <div class="col-md-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-lg-12">
+                   <form action="{% url 'createNewPurchase' %}" method="post" class="needs-validation" onsubmit="return validateParty()">
+                    {% csrf_token %}
+                        <div class="row mt-3">
+                            <div class="col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label for="pur_date">Date</label>
+                                    <input type="date" name="date" id="pur_date" class="form-control" value="{% now 'Y-m-d' %}" required />
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label for="item_hsn">Bill No.</label>
+                                    <input type="number" name="bill_no" id="bill_no" value="{{bill_no}}" class="form-control" readonly />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label for="check_party">Party</label>
+                            <label class="switch">
+                                <input type="checkbox" name="party" id="check_party">
+                                <span class="slider round"></span>
+                            </label>
+                            <!-- <input type="checkbox" name="party" id="check_party"> -->
+                        </div>
+                        <div class="row mt-3" id="party_details" style="display: none;">
+                            <div class="col-md-4">
+                                <label for="party_name">Party's Name</label>
+                                <input type="text" name="party_name" id="party_name" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="party_phone">Phone number</label>
+                                <input type="tel" name="party_phone" id="party_phone" class="form-control" title="Ex: 7035541267" placeholder="Ex: 7035541267">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="party_gstin">GST IN</label>
+                                <input type="text" name="party_gstin" id="party_gstin" class="form-control" placeholder="Ex: 22AAAAA0000A1Z5" title="Ex: 22AAAAA0000A1Z5">
+                            </div>
+                        </div>
+
+                        <div class="row clearfix mt-3">
+                            <div class="col-md-12 table-responsive-md">
+                              <table class="table table-bordered table-hover mt-3" id="items_table" style="background-color: #eae9c4; border-color: white;">
+                                <thead>
+                                  <tr>
+                                    <th scope="col" class="text-center">#</th>
+                                    <th scope="col" class="text-center col-2" >ITEM</th>
+                                    <th scope="col" class="text-center col-2">HSN</th>
+                                    <th scope="col" class="text-center col-2">QTY</th>
+                                    <th scope="col" class="text-center col-2">RATE</th>
+                                    <th scope="col" class="text-center col-2">TAX</th>
+                                    <th scope="col" class="text-center col-2">AMOUNT</th>
+                                    <th scope="col" class=""></th>
+                                  </tr>
+                                </thead>
+                                <tbody id="pur-items-table-body">
+                                    <tr id='addr1'>
+                                        <td class="item_sl_num">1</td>
+                                        <td>
+                                            <div class="w-100">
+                                                <div class="p-0 border-0 bg-none position-relative drop-box" style="display: block;">
+                                                    <input type="text" id="item1" value="" name="item[]" class="dropdown-toggle form-control item-display" onkeyup="filterFunction($(this).attr('id'))"  data-bs-toggle="dropdown" aria-expanded="false" placeholder="Items.." autocomplete="off">
+                                                    <ul class="dropdown-menu w-100 items-available position-absolute" id="menu1"  style="overflow-y: auto;height: fit-content;max-height: 40vh;"> 
+                                                      {% for i in items %}
+                                                      <li class="dropdown-item items-options" onclick="getItemDetails($(this).parent().prev().attr('id'),`{{i.name}}`)">{{i.name}}</li>
+                                                      {% endfor %}
+                                                    </ul>
+                                                    
+                                                </div>
+                                             </div>
+                                        </td>
+                                        <td>
+                                            <input type="number" name='hsn[]' id="hsn1" placeholder='HSN Code' class="form-control"/>
+                                            <input type="text" name="pItems[]" id="pitem1" hidden>
+                                        </td>
+                                        <td><input type="number" name='qty[]'placeholder='Quantity' id="qty1" value="" class="form-control qty" min="1" required/></td>
+                                        <td><input type="number" name='price[]' id="price1" placeholder='Unit Price' class="form-control price" step="0.00" min="0" /></td>
+                                        <td><input type="text" name="tax[]" class="form-control tax" placeholder="VAT %" id="tax1"></td>
+                                        <td><input type="number" name='total[]' id="total1" class="form-control total" value="0" step="any" readonly /></td>
+                                        <td style="display: none;"><input type="number" step="any" name='taxamount1' id="taxamount1" class="form-control taxamount"/></td></td>
+                                        <td>
+                                            <button type="button" id="1" class="btn clone_row btn-outline-secondary mb-1 w-100" title="Clone Row">+</button><br>
+                                            <button type="button" id="1" class="btn remove_row btn-outline-secondary w-100" title="Remove Row">-</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                                <!-- <tr> -->
+                                    <td><button type="button" id="add_row_btn" class="btn btn-outline-secondary w-100" title="Add Row">+</button></td>
+                                <!-- </tr> -->
+                              </table>
+                
+                            </div>
+                          </div>
+
+
+
+
+                        <div class="row mt-3">
+                            <div class="col-sm-12 col-md-7"></div>
+                            <div class="col-sm-12 col-md-5">
+                                <div class="card px-3 py-4" style="background-color: #eae9c4;">
+                                    <div class="sub_total align-items-center amount_summary">
+                                        <div class="amt_head_label">
+                                            <label>SUB TOTAL</label>
+                                        </div>
+                                        <div class="val">
+                                            <input type="number" placeholder="0.00" value="0.00" class="form-control" name="subtotal" id="sub_total" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="tax align-items-center amount_summary">
+                                        <div class="amt_head_label">
+                                            <label>TAX</label>
+                                        </div>
+                                        <div class="val">
+                                            <input type="number" placeholder="0.00" value="0.00" class="form-control" name="tax" id="tax" readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="adjustment align-items-center amount_summary">
+                                        <div class="amt_head_label">
+                                            <label>ADJUSTMENT</label>
+                                        </div>
+                                        <div class="val">
+                                            <input type="number" placeholder="0.00" value="0.00" class="form-control" step="any" name="adjustment" id="adjustment">
+                                        </div>
+                                    </div>
+
+                                    <div class="grand_total align-items-center amount_summary">
+                                        <div class="amt_head_label">
+                                            <label>GRAND TOTAL</label>
+                                        </div>
+                                        <div class="val">
+                                            <input type="number" placeholder="0.00" class="form-control" value="0.00" name="grand_total" id="grand_total" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row mt-5 mb-5">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3">
+                                <button class="submit_btn w-100 text-uppercase" type="submit" name="new_purchase">Save & New</button>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="submit_btn w-100 text-uppercase" type="submit">Save</button>
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+
+                    </form> 
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
+
+
+<script>
+    $(document).ready(()=>{
+        var nav_links = $(".nav-item.nav-link");
+        
+        for(var i = 0; i < nav_links.length; i++){
+            $(nav_links[i]).removeClass('active')
+            if($(nav_links[i]).hasClass('nav-purchase')){
+                $(nav_links[i]).addClass('active');
+                break;
+            }
+        }
+    })
+    function filterFunction(id){
+        var options = $('#'+ $("#"+id).next().attr('id')).children();
+        var search_text = $("#"+id).val().toLowerCase();
+        options.each(function(){
+            if($(this).text().toLowerCase().includes(search_text)){
+                $(this).show()
+            }else{
+                $(this).hide()
+            }
+        })
+    }
+
+    function getItemDetails(inpId, value){
+        $('#'+inpId).val(value);
+
+        var n = inpId.slice(4);
+        $.ajax({
+        url: "{% url 'getItemData' %}",
+        type : 'GET',
+        data:{
+            id : value,
+            csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+        
+        success: function(response) {
+            if (response.status){
+                document.getElementById('hsn'+n).value = response.hsn;
+                document.getElementById('price'+n).value = response.pur_rate;
+                document.getElementById('tax'+n).value = response.tax;
+                document.getElementById('pitem'+n).value = response.id;
+                calc();
+            }
+        },
+        });
+
+    }
+
+
+    $('#check_party').change(()=>{
+        $('#check_party').is(":checked") ? $('#party_details').css('display','flex') : $('#party_details').css('display','none');
+    })
+
+    function refreshIndex(){
+        var slNo = 1;
+        var $rows = $("#pur-items-table-body tr");
+
+        for (var i = 0; i < $rows.length; i++) {
+            $rows.eq(i).attr('id', 'addr'+slNo)
+            $rows.eq(i).find('[id]').each(function() {
+                var oldId = $(this).attr('id');
+                var newId = oldId.replace(/\d+/, slNo);
+                $(this).attr('id', newId );
+            });
+
+            $rows.eq(i).find('.item_sl_num').text(slNo);
+            slNo++;
+        }
+    }
+
+    // table row clone and remove.
+    $(document).on('click','.remove_row',function(){
+        var row_id = $(this).attr("id");
+        console.log(row_id);
+        $('#addr'+row_id+'').remove();
+        refreshIndex();
+        calc();
+    });
+
+
+    $(document).on('click','.clone_row',function(){
+        var roinc = $("#pur-items-table-body tr").length;
+        var originalRow = $(this).closest('#pur-items-table-body tr'); 
+        var clonedRow = originalRow.clone();
+
+        clonedRow.attr('id', 'addr' +(roinc+1));
+
+        // clonedRow.find('.item_sl_num').text(roinc+1);
+        clonedRow.find('.item-display').attr('id', 'item'+(roinc+1));
+        clonedRow.find('.items-available').attr('id', 'menu'+(roinc+1));
+
+        // clonedRow.find('.clone_row').attr('id',roinc+1);
+
+        clonedRow.find('[id]').each(function() {
+            var oldId = $(this).attr('id');
+            var newId = oldId.replace(/\d+/, roinc+1);
+            console.log(newId)
+            $(this).attr('id', newId );
+        });
+
+        clonedRow.find('.item').each(function() {
+            $(this).val(originalRow.find('.item').val());
+        });
+        clonedRow.find('.item1').each(function() {
+            $(this).val(originalRow.find('.item1').val());
+        });
+
+        originalRow.after(clonedRow);
+        refreshIndex();
+        calc();
+        
+    });
+
+    $(document).ready(function(){
+        $('#add_row_btn').click(function(){
+            var roinc = $("#pur-items-table-body tr").length;
+            roinc++;
+            $('#pur-items-table-body').append(
+                `<tr id='addr${roinc}'>
+                    <td class="item_sl_num">${roinc}</td>
+                    <td>
+                        <div class="w-100">
+                            <div class="p-0 border-0 bg-none position-relative drop-box" style="display: block;">
+                                <input type="text" id="item${roinc}" value="" name="item[]" class="dropdown-toggle form-control item-display" onkeyup="filterFunction($(this).attr('id'))"  data-bs-toggle="dropdown" aria-expanded="false" placeholder="Items.." autocomplete="off">
+                                <ul class="dropdown-menu w-100 items-available position-absolute" id="menu${roinc}"  style="overflow-y: auto;height: fit-content;max-height: 40vh;"> 
+                                    {% for i in items %}
+                                    <li class="dropdown-item items-options" onclick="getItemDetails($(this).parent().prev().attr('id'),$(this).html())">{{i.name}}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" name='hsn[]' id="hsn${roinc}" placeholder='HSN Code' class="form-control"/>
+                        <input type="text" name="pItems[]" id="pitem${roinc}" hidden>
+                    </td>
+                    <td><input type="number" name='qty[]'placeholder='Quantity' id="qty${roinc}" value="" class="form-control qty" min="1" required/></td>
+                    <td><input type="number" name='price[]' id="price${roinc}" placeholder='Unit Price' class="form-control price" step="0.00" min="0" /></td>
+                    <td><input type="text" name="tax[]" class="form-control tax" placeholder="VAT %" id="tax${roinc}"></td>
+                    <td><input type="number" name='total[]' id="total${roinc}" class="form-control total" value="0" step="any" readonly /></td>
+                    <td style="display: none;"><input type="number" step="any" name='taxamount1' id="taxamount${roinc}" class="form-control taxamount"/></td></td>
+                    <td>
+                        <button type="button" id="${roinc}" class="btn clone_row btn-outline-secondary mb-1 w-100" title="Clone Row">+</button><br>
+                        <button type="button" id="${roinc}" class="btn remove_row btn-outline-secondary w-100" title="Remove Row">-</button>
+                    </td>
+                </tr>`
+            )
+        });
+    });
+
+    $('#pur-items-table-body').on('keyup change', function () {
+        calc();
+    });
+
+    // $('.qty').on('keyup change', function () {
+    //     calc();
+    // });
+
+    $(document).on('change', '.item',function(){ 
+                
+        var n = $(this).attr("id").slice(4);
+        console.log(n)
+        $.ajax({
+        url: "{% url 'getItemData' %}",
+        type : 'GET',
+        data:{
+            id : $(this).val(),
+            csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+        
+        success: function(response) {
+            if (response.status){
+                document.getElementById('hsn'+n).value = response.hsn;
+                document.getElementById('price'+n).value = response.pur_rate;
+                document.getElementById('tax'+n).value = response.tax;
+            }
+        },
+        });
+        
+
+    });
+
+    function calc() {
+        $('#items_table tbody tr').each(function () {
+            var html = $(this).html();
+            if (html != '') {
+                var qty = $(this).find('.qty').val();                
+                var price = $(this).find('.price').val();
+                var vat = $(this).find('.tax').val();
+                if (vat == 'VAT 5%'){
+                    var tax = 5;
+                }
+                else{
+                    var tax = 0;
+                }
+
+                $(this).find('.total').val(parseFloat(qty) * parseFloat(price));
+                $(this).find('.taxamount').val((qty * price) * (tax / 100));
+                console.log('tax==',(qty * price) * (tax / 100));
+                calc_total();
+            }
+        });
+    }
+
+    function calc_total() {
+            
+        total = 0;
+        $('.total').each(function () {
+            total += parseFloat($(this).val());
+        });
+        taxamount = 0;
+        $('.taxamount').each(function () {
+            taxamount += parseFloat($(this).val());
+        });
+        $('#sub_total').val(total.toFixed(2));
+        $('#tax').val(taxamount.toFixed(2));
+        var adj = parseFloat($("#adjustment").val()) || 0;
+        var gtot = taxamount + total  + adj;
+        $('#grand_total').val(gtot.toFixed(2));
+
+    }
+    $(document).on('keyup',"#adjustment",function(){
+        var subtot = parseFloat($('#sub_total').val());
+        if(subtot != 0.0){
+            var tax = parseFloat($('#tax').val()) || 0;
+            var ad = parseFloat($("#adjustment").val()) || 0;
+            $('#grand_total').val((parseFloat(subtot)+parseFloat(tax)+parseFloat(ad)).toFixed(2));
+        }
+    });
+
+    function validateParty(){
+        var phone = $('#party_phone').val();
+        var gstin = $('#party_gstin').val();
+        
+        const mobPattern = /^\d{10}$/;
+        // const gstinPattern = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[1-9A-Z]{1}[0-9A-Z]{1}[0-9A-Z]{1}[0-9A-Z]{1}[0-9A-Z]{1}[0-9A-Z]{1}[0-9A-Z]{1}$/;
+        const gstinPattern = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}$/;
+        if ($('#check_party').is(":checked")){
+            if( phone != ""){
+            if(! mobPattern.test(phone)){
+                alert('Invalid.! Mobile Number should have 10 digits..')
+                return false;
+            }
+        }
+
+        if( gstin != ""){
+            if(! gstinPattern.test(gstin)){
+                alert('Invalid GST Number..\n Ex: 22AAAAA0000A1Z5')
+                return false;
+            }
+        }
+        }
+
+        return true
+    }
+
+</script>
+{% endblock %}

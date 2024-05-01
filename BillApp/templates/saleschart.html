@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load social_share %}
+{% block title %}Sales Reports{% endblock %}
+{% block content %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<div class="chart-container" style="width: 70%; margin-left: 15vw; margin-top: 5vh;">
+    <div class="d-flex justify-content-end">
+        <div class="ml-auto">
+            <a href="{% url 'sales_report' %}" style="font-size: x-large; color: black;" title="Close">
+                <i class="fa fa-times-circle fs-6 tb close_pad mt-4 "  aria-hidden="true"></i>
+            </a>
+        </div>
+    </div>
+    <form id="chartToggleForm">
+        <label><input type="radio" name="chartType" value="monthly" checked> Monthly</label>
+        <label><input type="radio" name="chartType" value="yearly"> Yearly</label>
+    </form>
+
+    <div id="monthlyChartContainer" style="display:block;">
+        <canvas id="monthlyChart"></canvas>
+    </div>
+
+    <div id="yearlyChartContainer" style="display:none;">
+        <canvas id="yearlyChart"></canvas>
+    </div>
+
+    <script>
+        // JavaScript to render the charts using Chart.js
+        document.addEventListener('DOMContentLoaded', function () {
+            var monthlyChartContainer = document.getElementById('monthlyChartContainer');
+            var yearlyChartContainer = document.getElementById('yearlyChartContainer');
+
+            document.getElementById('chartToggleForm').addEventListener('change', function () {
+                var selectedChart = document.querySelector('input[name="chartType"]:checked').value;
+
+                if (selectedChart === 'monthly') {
+                    monthlyChartContainer.style.display = 'block';
+                    yearlyChartContainer.style.display = 'none';
+                } else if (selectedChart === 'yearly') {
+                    monthlyChartContainer.style.display = 'none';
+                    yearlyChartContainer.style.display = 'block';
+                }
+            });
+
+                var ctxMonthly = document.getElementById('monthlyChart').getContext('2d');
+                var ctxYearly = document.getElementById('yearlyChart').getContext('2d');
+    
+                var monthlyData = {
+                    labels: {{ chart_data.monthly_labels|safe }},
+                    datasets: [{
+                        label: 'Monthly Sales',
+                        data: {{ chart_data.monthly_sales|safe }},
+                        backgroundColor: '#218560',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                };
+    
+                var yearlyData = {
+                    labels: {{ chart_data.yearly_labels|safe }},
+                    datasets: [{
+                        label: 'Yearly Sales',
+                        data: {{ chart_data.yearly_sales|safe }},
+                        backgroundColor: '#218560',
+                        borderColor: '#218560',
+                        borderWidth: 1
+                    }]
+                };
+    
+                var monthlyChart = new Chart(ctxMonthly, {
+                    type: 'bar',
+                    data: monthlyData,
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+    
+                var yearlyChart = new Chart(ctxYearly, {
+                    type: 'line',
+                    data: yearlyData,
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            });
+        </script>
+   
+{% endblock %}

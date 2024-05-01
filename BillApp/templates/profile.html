@@ -1,0 +1,503 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .bg-light{
+        background: #eae9c4 !important;
+    }
+    .bg-white {
+        background-color: #407d58!important;
+    }
+    .content {
+        background: rgb(255, 255, 255);
+    }
+    .text-primary{
+        color: #003e27 !important;
+    }
+    .left_box{
+        background: #eae9c4;
+        padding: 1rem 0.2rem;
+        height: 100%;
+        border-radius: 6px;
+    }
+    .right_box{
+        background: #eae9c4;
+        padding: 1rem 0.2rem;
+        height: fit-content;
+        border-radius: 6px;
+    }
+    .edit_data_section{
+        background: #eae9c4;
+        padding: 1rem 0.2rem;
+        height: fit-content;
+        border-radius: 6px;
+    }
+    .edit_data_section .form-group{
+        margin-bottom: 1rem;
+    }
+    .data_entr{
+        margin: 1.1rem 0rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    .data_head{
+        font-size: 1.2rem;
+        font-weight: 500;
+    }
+    .data{
+        float: right;
+        font-size: 1rem;
+        font-weight: 500;
+    }
+    @media screen and (max-width:768px) {
+        .left_box, .right_box{
+            height: fit-content;
+             margin-bottom: 1rem;
+        }
+    }
+</style>
+<div class="container-fluid pt-4 px-4">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="left_box w-100">
+                <div class="logo_section w-100 my-4 mb-1">
+                    <div class="logo_img d-flex justify-content-center align-items-center">
+                        {% if not cmp.logo %}
+                        <img class="img-fluid rounded-circle w-75" src="{% static 'assets/img/no-image.webp' %}" alt="{{cmp.company_name}}" id="company_logo">
+                        {% else %}
+                        <img class="img-fluid rounded-circle w-75" src="{{cmp.logo.url}}" alt="" id="company_logo">
+                        {% endif %}
+                    </div>
+                    <div class="logo_change_btn_section">
+                        {%if not cmp.logo %}
+                        <div class="upload-log-seg py-1">
+                          <div class="upload-btn d-flex justify-content-center">
+                            <button class="btn btn-outline-primary btn-sm my-3" id="update-logo-btn" style="display: block" >
+                              Update Logo
+                            </button>
+                          </div>
+                          <div class="logo-input-seg" id="logo-input-seg" style="display: none" >
+                            <form action="{% url 'updateLogo' cmp.user.id %}" class="form" method="post" enctype="multipart/form-data" >
+                              {%csrf_token%}
+                              <div class="form-group">
+                                <input type="file" accept="image/*" class="form-control" name="logo" id="inputLogo" />
+                              </div>
+                              <div class="w-100 d-flex justify-content-center pt-1">
+                                <input type="submit" class="btn btn-outline-success actionbuttons me-2 btn-sm" id="" value="SAVE" />
+                                <input type="button" class="btn btn-info actionbuttons btn-sm" id="logo-input-cancel" value="CANCEL" />
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                        {%else%}
+                        <div class="upload-image-seg py-1">
+                          <div class="upload-btn d-flex justify-content-center" >
+                            <button class="btn btn-outline-danger btn-sm my-3" onclick="removeProfileImage()" id="remove-image-btn" >
+                              <span><i class="bx bx-trash"></i></span> Remove Logo
+                            </button>
+                          </div>
+                        </div>
+                        {%endif%}
+                    </div>
+                </div>
+                <div class="cname_section w-100 my-1">
+                    <div class="cmp_name d-flex justify-content-center align-items-center mb-2">
+                        <h2 class="cmp_name_label">{{cmp.company_name}}</h2>
+                    </div>
+                    <div class="cmp_gst d-flex align-items-center justify-content-center">
+                        <label for="" class="me-1">GSTIN:</label>
+                        <h6 class="cmp_name_label mb-0">{{cmp.gst_number}}</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="right_box w-100" id="edit_profile_section" style="display: block;">
+                <div class="head_section w-100 my-2">
+                    <div class="profile_header d-flex justify-content-between align-items-center px-3">
+                        <div class="hd">
+                            <h3>Profile</h3>
+                        </div>
+                        <div class="edit-btn">
+                            <button class="btn btn-outline-secondary btn-sm" id="edit_profile_btn">EDIT</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="prof_data w-100 px-3">
+                    <!-- <div class="data_entr cmp_name">
+                        <div class="h">
+                            <span class="data_head">Company Name</span>
+                        </div>
+                        <div class="val">
+                            <span class="data">{{cmp.company_name}}</span>
+                        </div>
+                    </div>
+                    <hr> -->
+                    <div class="data_entr cmp_eml">
+                        <div class="h">
+                            <span class="data_head">Email</span>
+                        </div>
+                        <div class="val">
+                            <span class="data">{{cmp.user.email}}</span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="data_entr cmp_gst">
+                        <div class="h">
+                            <span class="data_head">GSTIN</span>
+                        </div>
+                        <div class="val">
+                            <span class="data">{{cmp.gst_number}}</span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="data_entr cmp_cntct">
+                        <div class="h">
+                            <span class="data_head">Contact</span>
+                        </div>
+                        <div class="val">
+                            <span class="data">{{cmp.phone_number}}</span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="data_entr cmp_adrs">
+                        <div class="h">
+                            <span class="data_head">Address</span>
+                        </div>
+                        <div class="val">
+                            <span class="data text-end">{{cmp.address}}</span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="data_entr cmp_st">
+                        <div class="h">
+                            <span class="data_head">State</span>
+                        </div>
+                        <div class="val">
+                            <span class="data">{{cmp.state}}</span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="data_entr cmp_cntry">
+                        <div class="h">
+                            <span class="data_head">Country</span>
+                        </div>
+                        <div class="val">
+                            <span class="data">{{cmp.country}}</span>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+            <!-- EDIT Form -->
+            <div class="edit_data_section w-100" style="display: none;" id="edit_profile_form_section">
+                <div class="head d-flex justify-content-between px-3 mb-2">
+                    <div class="label">
+                        <h3>EDIT PROFILE</h3>
+                    </div>
+                    <div class="close_btn">
+                        <button class="btn btn-sm" id="close_form_btn"><i class="fa fa-close fs-5"></i></button>
+                    </div>
+                </div>
+                <div class="edit_profile_form px-3">
+                    <form action="{% url 'updateUserProfile' %}" method="post" class="form edit_profile_form">
+                        {% csrf_token %}
+                        <div class="row form-group">
+                            <div class="col-md-6">
+                                <label for="">Username</label>
+                                <input type="text" required name="username" id="uname" class="form-control" value="{{cmp.user.username}}">
+                                <div class="text-danger" id="username_err"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="">Company Name</label>
+                                <input type="text" required name="company_name" id="cname" class="form-control" value="{{cmp.company_name}}">
+                                <div class="text-danger" id="cname_err"></div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-6">
+                                <label for="">Email</label>
+                                <input type="text" required name="email" id="cemail" class="form-control" value="{{cmp.user.email}}" pattern="[^@\s]+@[^@\s]+\.[^@\s]+" title="Incorrect Email format.!">
+                                <div class="text-danger" id="email_err"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="">GSTIN</label>
+                                <input type="text" name="gst_number" id="cgstin" pattern="[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}" title="Ex: 22AAAAA0000A1Z5" class="form-control" value="{{cmp.gst_number}}">
+                                <div class="text-danger" id="gstin_err"></div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-6">
+                                <label for="">Contact</label>
+                                <input type="text" required name="phone_number" id="cmobile" class="form-control" value="{{cmp.phone_number}}" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" title="Phone Number must have 10 digits">
+                                <div class="text-danger" id="phone_err"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="">State</label>
+                                <input type="text" required name="state" id="cstate" class="form-control" value="{{cmp.state}}">
+                                <div class="text-danger" id="state_err"></div>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col-md-6">
+                                <label for="">Address</label>
+                                <textarea name="address" required id="caddress" cols="" class="form-control" rows="3">{{cmp.address}}</textarea>
+                                <div class="text-danger" id="address_err"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="">Country</label>
+                                <input type="text" required name="country" id="ccountry" class="form-control" value="{{cmp.country}}">
+                                <div class="text-danger" id="country_err"></div>
+                            </div>
+                        </div>
+                        <div class="row py-2">
+                            <div class="col-md-12 d-flex justify-content-center">
+                                <div class="save_btn">
+                                    <input type="submit" id="edit_form_sub" class="btn btn-outline-success me-2 fw-bold" value="SAVE">
+                                </div>
+                                <!-- <div class="cancel_btn">
+                                    <button class="btn btn-sm btn-info fw-bold text-white" id="cancel_edit_btn">CANCEL</button>
+                                </div> -->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $("#update-logo-btn").click(() => {
+        $("#logo-input-seg").css("display", "block");
+        $("#update-logo-btn").css("display", "none");
+    }); 
+    $("#logo-input-cancel").click(() => {
+        $("#logo-input-seg").css("display", "none");
+        $("#update-logo-btn").css("display", "block");
+    });
+
+    $(document).ready(()=>{
+        $('#edit_profile_btn').click(()=>{
+            $('#edit_profile_section').hide();
+            $('#edit_profile_form_section').show();
+        })
+    })
+
+    $(document).ready(()=>{
+        $('#close_form_btn').click(()=>{
+            $('#edit_profile_form_section').css('display','none');
+            $('#edit_profile_section').css('display','block');
+            
+        })
+    })
+
+    $(document).ready(()=>{
+        var notValid = false;
+        function setValue(value){
+            notValid = value;
+        }
+
+        $('#edit_form_sub').on('click',function(e){
+            let usrnm = $('#uname').val();
+            let email = $('#cemail').val();
+            $('#username_err').text('');
+            $('#edit_form_sub').prop('disabled',false)
+            if(usrnm != "" && usrnm != `{{cmp.user.username}}`){
+                
+                $.ajax({
+                    url: "{% url 'validateUsername' %}",
+                    data: {
+                    'username' : usrnm
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        notValid = data.is_taken
+                        if (data.is_taken) {
+                            $('#username_err').text('User name already exists.!');
+                        }
+                        else{
+                            $('#username_err').text('');
+                        }
+                    }
+                });
+            }
+            if(email != "" && email != `{{cmp.user.email}}`){
+                
+                $.ajax({
+                    url: "{% url 'validateEmail' %}",
+                    data: {
+                    'email' : email
+                    },
+                    dataType: 'json',
+                    success: function (data) {
+                        notValid = data.is_taken
+                        if (data.is_taken) {
+                            $('#email_err').text('Email already exists.!');
+                        }
+                        else{
+                            $('#email_err').text('');
+                        }
+                    }
+                });
+            }
+            if (usrnm == "") {
+                $('#username_err').text('User name cannot be blank.!');
+                notValid = true;
+            }
+            if (email == "") {
+                $('#email_err').text('Email cannot be blank.!');
+                notValid = true;
+            }
+
+            if(notValid){
+                e.preventDefault();
+            }
+
+        })
+    })
+
+
+    function validateProfile(){
+        let usrnm = $('#uname').val();
+        let cname = $('#cname').val();
+        let email = $('#cemail').val();
+        let mobile = $('#cmobile').val();
+        let gst = $('#cgstin').val();
+        let addrss = $('#caddress').val();
+        let state = $('#cstate').val();
+        let cntry = $('#ccountry').val();
+        
+        let flag = 0;
+
+        if(usrnm != "" && usrnm != `{{cmp.user.username}}`){
+            $.ajax({
+                url: "{% url 'validateUsername' %}",
+                data: {
+                'username' : usrnm
+                },
+                dataType: 'json',
+                success: function (data) {
+                if (data.is_taken) {
+                    $('#username_err').text('User name already exists.!');
+                    return false;
+                }
+                }
+            }); 
+        }
+        // if(usrnm == ""){
+        //     $('#username_err').text('Username cannot be blank.!');
+        //     flag = 1;
+        // }
+
+        // if(email != "" && email != `{{cmp.user.email}}`){
+        //     $.ajax({
+        //         method:'GET',
+        //         url: "{% url 'validateEmail' %}",
+        //         data: {
+        //             'email': email
+        //         },
+        //         dataType: 'json',
+        //         success: function (data) {
+        //             if (data.is_taken) {
+        //             $('#email_err').text('Email already exists.!');
+        //             flag = 1;
+        //             }
+        //         }
+        //     }); 
+        // }
+        // if(email == ""){
+        //     $('#email_err').text('Email cannot be blank.!');
+        //     flag = 1;
+        // }
+
+        // if(cname ==""){
+        //     $('#cname_err').text('Invalid..!');
+        //     flag = 1;
+        // }
+        
+    }
+
+    $(document).ready(function(){
+  $("#cemail").blur(function () {
+    var email = $(this).val();
+    // alert(email)
+    if(email != `{{cmp.user.email}}`){
+        $.ajax({
+        method:'GET',
+        url: "{% url 'validateEmail' %}",
+        data: {
+            'email': email
+        },
+        dataType: 'json',
+        success: function (data) {
+            if (data.is_taken) {
+            alert("Email already exists.!");
+            }
+        }
+        });
+    }
+    
+
+  });
+});
+$(document).ready(function(){
+    $("#uname").blur(function () {
+        var user = $(this).val();
+        if(user != `{{cmp.user.username}}`){
+            $.ajax({
+                url: "{% url 'validateUsername' %}",
+                data: {
+                'username': user
+                },
+                dataType: 'json',
+                success: function (data) {
+                if (data.is_taken) {
+                    alert("User name already exists.");
+                }
+                }
+            });
+        }
+                      
+    });
+  });
+
+    function removeProfileImage() {
+        swal({
+            title: "Are you sure?",
+            text: "Logo will be removed!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        }).then((willDelete) => {
+            if (willDelete) {
+            window.location.href = "/remove_company_logo";
+            } else {
+            swal({ icon: "success", text: "Operation Aborted!" });
+            }
+        });
+    }
+
+    inputLogo.onchange = (evt) => {
+        const [file] = inputLogo.files;
+        if (file) {
+        company_logo.src = URL.createObjectURL(file);
+        }
+    };
+
+    // $(document).ready(()=>{
+    //     var nav_links = $(".nav-item.nav-link");
+        
+    //     for(var i = 0; i < nav_links.length; i++){
+    //         $(nav_links[i]).removeClass('active')
+    //         if($(nav_links[i]).hasClass('nav-dashboard')){
+    //             $(nav_links[i]).addClass('active');
+    //             break;
+    //         }
+    //     }
+    // });
+</script>
+{% endblock %}

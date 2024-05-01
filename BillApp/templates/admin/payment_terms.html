@@ -1,0 +1,94 @@
+{% extends 'admin/admin_index.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+<style>
+    main{
+        background: #fff;
+    }
+    .btn:focus{
+        box-shadow: none;
+    }
+    .pay_terms{
+        background-color: #eae9c4;
+    }
+</style>
+<div class="container-fluid">
+    <div class="Payment_terms py-4">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="pay_terms p-3">
+                    <div class="row mb-2">
+                        <div class="col-12 col-lg-12 col-xl-12">
+                            <div class="card" style="background-color: #ddddbeed;">
+                                <div class="row no-gutters">
+                                    <div class="col-md-2"></div>
+                                    <div class="col-md-8 mt-4 mb-4">
+                                        <center>
+                                            <h4 class="card-title text-dark">PAYMENT TERMS</h4>
+                                        </center>
+                                    </div>
+                                    <div class="col-md-2"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <a href="{% url 'addNewPaymentTerm' %}"><button class="btn btn-sm btn-success"><i class="fas fa-plus me-2"></i> ADD NEW</button></a>
+                    </div>
+                    <!-- <h4 class="ms-2">Payment Terms</h4> -->
+                    <table id="payment_terms_table" width="100%">
+                        <thead>
+                            <tr>
+                                <th class="text-center">SL.NO</th>
+                                <th class="text-center">Duration</th>
+                                <th class="text-center">Term</th>
+                                <th class="text-center">Days</th>
+                                <th class="text-center"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in terms %}
+                            <tr>
+                                <td class="text-center">{{forloop.counter}}</td>
+                                <td class="text-center">{{i.duration}}</td>
+                                <td class="text-center">{{i.term}}</td>
+                                <td class="text-center">{{i.days}}</td>
+                                <td class="text-center"><a href="{% url 'deletePaymentTerm' i.id %}" class="btn btn-outline-danger btn-sm" onclick="return confirm('Are you sure you want to delete this Payment Term.?')">DELETE</a></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+<script>
+    $(document).ready(()=>{
+        var nav_links = $(".nav-item.nav-link");
+        
+        for(var i = 0; i < nav_links.length; i++){
+            $(nav_links[i]).removeClass('active')
+            if($(nav_links[i]).hasClass('nav-payment-terms')){
+                $(nav_links[i]).addClass('active');
+                break;
+            }
+        }
+    });
+
+    let table = new DataTable("#payment_terms_table", {
+        "scrollX": true
+    });
+    window.addEventListener('resize', function(){
+        $('#payment_terms_table').width('100%')
+    });
+</script>
+{% endblock %}

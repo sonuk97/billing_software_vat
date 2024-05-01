@@ -1,0 +1,284 @@
+{% extends 'admin/admin_index.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+<style>
+    main{
+        background: #fff;
+    }
+    .btn:focus{
+        box-shadow: none;
+    }
+    .purchs_clients{
+        background-color: #eae9c4;
+    }
+    .submit_btn, .submitunit_btn {
+        background: #c6aa589e;
+        border: 1px solid white;
+        border-radius: 4px;
+        color: white;
+        font-weight: 600;
+        padding: 0.5rem 1rem;
+    }
+    .submit_btn:hover, .submitunit_btn:hover{
+        background: #C6AA58;
+    }
+</style>
+<div class="container-fluid">
+    <div class="Purchased_clients py-4">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="purchs_clients p-3">
+                    <h4 class="ms-2">Purchased Clients</h4>
+                    <table id="pur_clients_table" width="99%">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Company Name</th>
+                                <th>Email</th>
+                                <th>Contact</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Payment Term</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in clients %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{i.company.company_name}}</td>
+                                <td>{{i.user.email}}</td>
+                                <td>{{i.company.phone_number}}</td>
+                                <td>{{i.purchase_start_date}}</td>
+                                <td>{{i.purchase_end_date}}</td>
+                                <td>{{i.payment_term}}</td>
+                                <td>{{i.purchase_status}}</td>
+                                <td>
+                                    {% if i.purchase_status == 'valid' %}
+                                    <a href="{% url 'cancelSubscription' i.id %}"><button type="button" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to cancel subscription of the user..?')">CANCEL</button></a>
+                                    {% else %}
+                                    <button type="button" class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#purchase{{i.id}}" >ACTIVATE</button>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- New Payment Term Modal -->
+<div class="modal fade" id="newPaymentTerm" tabindex="-1" aria-labelledby="newPaymentTermLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content" style="background: #ddddbe;">
+        <div class="modal-header" style="border-bottom: 1px solid #ffffff;">
+          <h5 class="modal-title text-dark" id="newPaymentTermLabel">New Payment Term</h5>
+          <button type="button" id="newPaymentTermModalClose" class="btn-close" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form method="post" class="needs-validation" id="newPaymentTermForm">
+            {% csrf_token %}
+                <div class="row mt-3">
+                    <div class="col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label for="duration">Duration</label>
+                            <input type="number" name="duration" id="duration" class="form-control" autocomplete="off" min="1" step="1" required />
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12 col-lg-12">
+                        <div class="form-group">
+                            <label for="term">Term</label>
+                            <select class="form-control" name="term" id="term" required>
+                                    <option value="Days" selected>Days</option>
+                                    <option value="Months">Months</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </form> 
+        </div>
+        <div class="modal-footer d-flex justify-content-center" style="border-top: 1px solid #ffffff;">
+          <button type="button" id="savePaymentTerm" data-bs-dismiss="modal" class="submitunit_btn w-50 text-uppercase">SAVE</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<!-- Purchase Modal -->
+{% for i in clients %}
+<div class="modal fade" id="purchase{{i.id}}" tabindex="-1" aria-labelledby="purchase{{i.id}}Label" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content" style="background: #ddddbe;">
+        <div class="modal-header" style="border-bottom: 1px solid #ffffff;">
+          <h5 class="modal-title text-dark" id="purchase{{i.id}}Label">Product Purchase</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="{% url 'clientPurchase' i.id %}" method="post" id="purchase{{i.id}}Form">
+            {% csrf_token %}
+            <div class="modal-body">
+                <div class="client_info d-flex justify-content-between mb-2">
+                    <span>Company Name:<span class="fw-bolder fs-5 ms-2">{{i.company.company_name}}</span></span>
+                    <span>Contact:<span class="fw-bolder fs-6 ms-2">{{i.company.phone_number}}</span></span>
+                </div>
+                <div class="client_info d-flex justify-content-between mb-2">
+                    <span></span>
+                    <span>Email:<span class="fw-bolder fs-6 ms-2">{{i.user.email}}</span></span>
+                </div>
+                <div class="client_info d-flex justify-content-between mb-2">
+                    <span></span>
+                    <span>GSTIN:<span class="fw-bolder fs-6 ms-2">{{i.company.gst_number}}</span></span>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="purchase{{i.id}}Date">Purchase Date</label>
+                            <input type="date" class="form-control" name="purchaseDate" id="purchase{{i.id}}Date" value="{% now 'Y-m-d' %}" onchange="changeEndDate(`{{i.id}}`)" required>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="paymentTerms{{i.id}}">Payment Term</label>
+                            <div class="d-flex">
+                                <select name="paymentTerm" id="paymentTerms{{i.id}}" class="form-control payTerms" onchange="changeEndDate(`{{i.id}}`)" required>
+                                    <option value="">--Choose One--</option>
+                                    {% for item in terms %}
+                                    <option value="{{item.id}}" text="{{item.days}}">{{item.duration}} {{item.term}}</option>
+                                    {% endfor %}
+                                </select>
+                                <a href="#" class="ms-2">
+                                    <button type="button" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#newPaymentTerm" class="btn btn-outline-light" onclick="changeAttribute(`{{i.id}}`)"><i class="fa fa-plus text-dark"></i></button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="end{{i.id}}Date">End Date</label>
+                            <input type="date" class="form-control bg-light" name="endDate" id="end{{i.id}}Date" readonly>
+                        </div>
+                    </div>
+                </div>
+            
+            </div>
+            <div class="modal-footer d-flex justify-content-center" style="border-top: 1px solid #ffffff;">
+                <button type="submit" id="save_unit" class="submitunit_btn w-50 text-uppercase">SAVE</button>
+            </div>
+        </form>
+      </div>
+    </div>
+</div>
+{% endfor %}
+
+
+
+<script>
+    $(document).ready(()=>{
+        var nav_links = $(".nav-item.nav-link");
+        
+        for(var i = 0; i < nav_links.length; i++){
+            $(nav_links[i]).removeClass('active')
+            if($(nav_links[i]).hasClass('nav-purchased-clients')){
+                $(nav_links[i]).addClass('active');
+                break;
+            }
+        }
+    });
+
+    let table = new DataTable("#pur_clients_table", {
+        "scrollX": true
+    });
+
+    window.addEventListener('resize', function(){
+        $('#pur_clients_table').width('99%')
+    });
+
+    function changeEndDate(id) {
+        var start = $('#purchase' + id + 'Date').val();
+        var end = $('#end' + id + 'Date');
+        var days = parseInt($('#paymentTerms' + id).find('option:selected').attr('text'));
+
+        if (start !== "" && !isNaN(days)) {
+            var sDate = new Date(start);
+            var eDate = new Date(sDate.getTime() + days * 24 * 60 * 60 * 1000);
+            var formattedEndDate = eDate.toISOString().split('T')[0]; 
+
+            end.val(formattedEndDate);
+        }
+    }
+
+    function changeAttribute(id){
+        $('#newPaymentTermModalClose').attr('data-bs-target','#purchase'+id)
+    }
+
+    $(document).on("click","#savePaymentTerm",function(){
+        var dur = $("#duration").val();
+        var trm = $("#term").val();
+        var modalId = $('#newPaymentTermModalClose').data('bs-target');
+
+        if (dur !="" && trm != ""){
+            $.ajax({
+            type : 'POST',
+            url:"{% url 'createPaymentTerm' %}",
+            data:{
+                duration : dur,
+                term : trm,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            
+            success: function(response) {
+                console.log("AJAX Success - Response Data:", response);
+                document.getElementById("newPaymentTermForm").reset();
+                $(modalId).modal('toggle');
+                reloadPaymentTerms();
+            },         
+        });
+        }
+        else{
+            alert('Invalid')
+        }
+    });
+
+    function reloadPaymentTerms() { 
+        $.ajax({
+            url: "{% url 'getPaymentTerms' %}",
+            type: "GET",
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+
+            success: function(data) {
+                console.log("AJAX Success - Dropdown Data:", data);
+
+                var dropdown = $('.payTerms');
+                dropdown.empty();
+                dropdown.append(`<option value="">--Choose One--</option>`);
+                $.each(data, function(key, value) {
+                    for(var i=0; i<value.length; i++){
+                        dropdown.append($('<option></option>').attr('text', value[i].days).text(value[i].duration+" "+value[i].term).val(value[i].id))
+                    }
+                    // console.log('Units reloaded..');
+                });
+            },
+            error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+            }
+        });
+    }
+
+    window.onload=function(){
+        reloadPaymentTerms()
+    }
+</script>
+{% endblock %}

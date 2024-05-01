@@ -1,0 +1,682 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load social_share %}
+{% block title %}Sales Reports{% endblock %}
+{% block content %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js" integrity="sha256-+C0A5Ilqmu4QcSPxrlGpaZxJ04VjsRjKu+G82kl5UJk=" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/css/selectize.bootstrap3.min.css" integrity="sha256-ze/OEYGcFbPRmvCnrSeKbRTtjG4vGLHXgOqsyLFTRjg=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+    main{
+        background: #ddddbeed;
+    }
+    .btn:focus{
+        box-shadow: none;
+    }
+    .add_newpurchase_btn{
+        border: 1px solid lightgoldenrodyellow;
+        padding: 0.5rem 2rem;
+        border-radius: 7px;
+        background: #c6aa58d9;
+        color: white;
+        font-weight: 500;
+        font-size: 1.1rem;
+    }
+    .add_newpurchase_btn:hover {
+        background: #b19542d9;
+    }
+    .action_btns{
+        background: #0d533ae6;
+        font-weight: 400;
+        color: white;
+        height: 3.5rem;
+        width: 5.87rem;
+    }
+    .action_btns:hover{
+        background: #1d8d68;
+        color: white;
+    }
+    .all_stock_reports{
+        background: #eae9c4;
+    }
+
+    table tr {
+        cursor: pointer;
+    }
+    .table-responsive {
+        max-height:100vh;
+    }
+    .table-responsive::-webkit-scrollbar {
+        display: none;
+    }
+
+    .share-dropdown {
+    position: relative;
+    display: inline-block;
+    }
+    .share-dropdown-menu {
+        position: absolute;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        right: 0;
+        background-color: #fff;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        display: none;
+        z-index: 10;
+    }
+
+    /* .trns_table_menu:hover .trans-dropdown-menu {
+        display: block;
+    } */
+
+    .share-dropdown-menu li {
+        padding: 5px 25px;
+        display: flex;
+        border-bottom: 1px solid khaki;
+        justify-content: left;
+    }
+
+    .share-dropdown-menu li a{
+        color: black;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+    .share-dropdown-menu li:hover {
+        background-color: #f0f0f0;
+    }
+    .share-dropdown i{
+        z-index: 5;
+    }
+
+    .submitShareEmailBtn {
+        background: #c6aa589e;
+        border: 1px solid white;
+        border-radius: 4px;
+        color: white;
+        font-weight: 600;
+        padding: 0.5rem 1rem;
+    }
+    .submitShareEmailBtn:hover{
+        background: #C6AA58;
+    }
+    
+    .custom-dropdown {
+        position: relative;
+        display: inline-block;
+        }
+
+        .dropdown-toggle {
+        padding: 10px;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        }
+
+        .dropdown-content {
+        z-index: 1;
+        display: none;
+        position: absolute;
+        background-color: #b4b4b450;
+        backdrop-filter: blur(5px);
+        padding: 10px;
+        border: 1px solid #1d8d68;
+        border-radius: 5px;
+        box-shadow: 3px 5px 5px 5px rgba(0, 0, 0, 0.201);
+        }
+
+        .dropdown-content input {
+        width: 100%;
+        padding: 8px;
+        margin-bottom: 10px;
+        background-color: white;
+        border-radius: 5px;
+        border: 1px solid rgb(168, 168, 168);
+        }
+
+        .dropdown-content button {
+        padding: 8px 15px;
+        background-color: rgb(0, 154, 108);
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        border-radius: 3px;
+        }
+
+        .custom-dropdown .dropdown-content .cls{
+            position: absolute;
+            right: -7px;
+            top: -7px;
+            padding: 3px 5px;
+            color: white;
+            text-shadow: 0px 0px 2px black ;
+            border-radius: 50%;
+            font-size: 15px;
+            background-color: rgba(255, 0, 0, 0.424);
+        }
+        .custom-dropdown .dropdown-content .title
+        {
+            background-color: rgb(255, 255, 255);
+            font-weight: 500;
+            color: rgb(0, 0, 0);
+            text-shadow: 0px 0px 20px rgb(255, 255, 255);
+            padding: 5px;
+            border-radius: 5px;
+        }
+        /* tooltip */
+        .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted #ccc; /* Add a dotted underline for visual indication */
+        cursor: help; /* Change the cursor to a help cursor on hover */
+        }
+
+        .tooltip .tooltiptext {
+        visibility: hidden;
+        width: 200px;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px;
+        position: absolute;
+        z-index: 1;
+        bottom: 125%;
+        left: 50%;
+        margin-left: -100px;
+        opacity: 0;
+        transition: opacity 0.3s;
+        }
+
+        .tooltip:hover .tooltiptext {
+        visibility: visible;
+        opacity: 1;
+        }
+
+        .filter-option {
+        width: 100%;
+        padding: 5px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 1px;
+    }
+
+    #myTable tbody{
+        cursor: pointer;
+        
+    }
+   
+    .custom-container {
+        
+        min-height: 100vh;
+        padding: 50px;
+         
+    }
+    .content-body {
+        width: 100%;
+        margin-left: 0%;
+        display: flex;
+        justify-content: center; /* Center the content horizontally */
+        align-items: center; /* Center the content vertically */
+        height: 100%; /* Full height of the viewport */
+        background-color: #1d8d68;
+    }
+    .date-input {
+        /* Add any additional styles you want for the date inputs */
+        /* For example, you might want to adjust the border, padding, etc. */
+        border: 1px solid #ccc;
+        border-radius: 3px;
+        padding: 5px 10px;
+        font-size: 1.1vw;
+    }
+    .btn-container {
+        display: flex;
+        align-items: center; /* Align items vertically */
+    }
+
+    .btn-container .btn {
+        flex-grow: 1; /* Allow the button to grow to fill available space */
+    }
+
+</style>
+<div class="container-fluid">
+    <div class="stock_reports_section py-4">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="all_stock_reports">
+                    <div class="all_stock_reports_table px-1 py-2 border rounded-1">
+                        <div class="top d-flex justify-content-start px-2 py-3">
+                            <div class="stk_rpts_head">
+                                <h4></h4>
+                            </div>
+                        </div>
+                        
+                        <div class="row px-2">
+                            <div class="col-md-6 d-flex justify-content-start align-items-center">
+                                <label for="" style="color: rgb(0, 0, 0); font-size: 1.3vw;"><b>Date</b></label>
+                                <input type="date" id="fromDate" class="date-input ms-2 form-control-sm" style="height: 1vh;" onchange="filterDates()">                            
+                                <label for="" style="color: rgb(0, 0, 0); font-size: 1.3vw;" class="mx-2">to</label>
+                                <input type="date" id="toDate" class="date-input form-control-sm" style="height: 1vh;" onchange="filterDates()">
+                            </div>
+                            <script>
+                                function formatDate(date) {
+                                    // Extract day, month, and year components
+                                    var day = date.getDate().toString().padStart(2, '0');
+                                    var month = (date.getMonth() + 1).toString().padStart(2, '0');
+                                    var year = date.getFullYear();
+                                    // Construct formatted date string
+                                    return day + '-' + month + '-' + year;
+                                }
+                                function filterDates() {
+                                    var fromDate = document.getElementById("fromDate").value;
+                                    var toDate = document.getElementById("toDate").value;
+                    
+                                    // Parse from and to dates
+                                    var fromDateObj = new Date(fromDate);
+                                    var toDateObj = new Date(toDate);
+                                    
+                                    // Format dates
+                                    var formattedFromDate = formatDate(fromDateObj);
+                                    var formattedToDate = formatDate(toDateObj);
+                                    
+                                    // Display the selected date range above the table
+                                    var dateDisplay = document.getElementById("dateDisplay");
+                                    dateDisplay.textContent = "From: " + formattedFromDate + " To: " + formattedToDate;
+                                    
+                                    // Rest of the filtering logic remains the same...
+                                    var selectedDate = new Date(fromDate);
+                                    selectedDate.setDate(selectedDate.getDate() - 1);
+                                    var table = document.getElementById("sales_reports_table");
+                                    var rows = table.getElementsByTagName("tr");
+                                    var emptyMessage = document.getElementById('emptyMessage');
+                                    var isEmpty = true;
+                                    for (var i = 1; i < rows.length; i++) {
+                                        var currentDate = rows[i].getElementsByTagName("td")[1].innerText;
+                                        var date = new Date(currentDate.replace(/(\d{2})-(\d{2})-(\d{2})/, "$2/$1/$3"));
+                                        if ((fromDate && date >= selectedDate) || !fromDate) {
+                                            if ((toDate && date <= new Date(toDate)) || !toDate) {
+                                                rows[i].style.display = "table-row";
+                                                isEmpty = false;
+                                            } else {
+                                                rows[i].style.display = "none";
+                                            }
+                                        } else {
+                                            rows[i].style.display = "none";
+                                        }
+                                    }
+                                    emptyMessage.style.display = isEmpty ? 'block' : 'none';
+                                }
+                                
+                            </script>
+                             <div class="col-md-6 d-flex justify-content-end align-items-center">
+                                <div class="btn-container">
+                                    <button class="btn action_btns ms-2 p-0" style="height: 5vh; width: 8vw;font-size: x-small;font-weight: 700;" onclick="printfunction()">
+                                        <i class="fas fa-print me-2"></i>PRINT
+                                    </button>
+                                </div>
+                                
+                                <div class="btn-container">
+                                    <button class="btn action_btns ms-2 p-0" style="height: 5vh; width: 8vw;font-size: x-small;font-weight: 700;" onclick="ExportToExcel('xlsx')">
+                                        <i class="fas fa-print me-2"></i>EXCEL
+                                    </button>
+                                </div>
+                                
+                                <div class="btn-container">
+                                    <button class="btn action_btns ms-2 p-0" style="height: 5vh; width: 8vw;font-size: x-small;font-weight: 700;" onclick="generatePDF()">
+                                        <i class="fas fa-file-pdf me-2"></i>PDF
+                                    </button>
+                                </div>
+                                
+                                <a href="{% url 'salesreport_graph' %}">
+                                    <button class="btn action_btns ms-2 p-0" style="height: 5vh; width: 8vw;font-size: x-small;font-weight: 700;">
+                                        <i class='fas fa-chart-line' ></i> GRAPH
+                                    </button>
+                                </a>
+                        
+                                <div class="share-dropdown">
+                                    <button class="btn action_btns ms-2 p-0" style="height: 5vh; width: 8vw;font-size: x-small;font-weight: 700;">
+                                        <i class="fas fa-share-nodes me-1"></i>SHARE
+                                    </button>
+                                    <ul class="share-dropdown-menu" aria-labelledby="navbarDropdown">
+                                        <li>{% post_to_whatsapp object_or_url "WhatsApp" %}</li>
+                                        <li><a href="#shareReportEmail" data-bs-toggle="modal">Email</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                            
+                <div class="row mt-4" id="report">
+
+                            <h2><ul style=" text-align:center;text-transform: uppercase;">{{cmp.company_name}}</ul></h2>
+                            <h3><ul style=" text-align:center;">Sales Report</ul></h3>
+                            <div id="dateDisplay" style="margin-bottom: 10px;color:black;margin-left:40%;"></div>
+
+                        <div class="stock_reports_table_section table-responsive">
+                            <table class="table table-responsive-md mt-2 table-hover stock_reports_table"  style="text-align: center;"id="sales_reports_table">
+                                <thead>
+                                    <tr id="tableHeadings">
+                                        <th>#</th>
+
+                                        <th  >
+                                            DATE 
+                                            <a  onclick="toggleDropdown(1)">&nbsp;<i class="fa fa-filter" aria-hidden="true"></i></a>
+                                            <div class="dropdown-content" id="dropdownContent1">
+                                                <label for="filterInput1" style="color: black; text-align: left;">Equal To</label>
+                                                <input type="date" id="filterInput1"  />
+                                                <div class="button-row">
+                                                    <a class="btn" style="background-color:#1d8d68;" onclick="cleardropdown(1)">Clear</a>
+                                                    <a class="btn" style="background-color:#1d8d68;" onclick="filterTable(1)">Apply</a>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th   >
+                                            INVOICE NO 
+                                            <a  onclick="toggleDropdown(2)">&nbsp;<i class="fa fa-filter" aria-hidden="true"></i></a>
+                                            <div class="dropdown-content" id="dropdownContent2">
+                                                <label for="filterInput2" style="color: black; text-align: left;">Equal To</label>
+                                                <input type="text" id="filterInput2"  />
+                                                <div class="button-row">
+                                                    <a class="btn" style="background-color:#1d8d68;" onclick="cleardropdown(2)">Clear</a> 
+                                                    &nbsp;<a class="btn" style="background-color:#1d8d68;" onclick="filterTable(2)">Apply</a>
+                                                </div>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            PARTY NAME 
+                                            <a onclick="toggleDropdown(3)">&nbsp;<i class="fa fa-filter" aria-hidden="true"></i></a>
+                                            <div class="dropdown-content" id="dropdownContent3">
+                                                <label for="filterInput3" style="color: black; text-align: left;">Equal To</label>
+                                                <input type="text" id="filterInput3"  />
+                                                <div class="button-row">
+                                                    <a class="btn" style="background-color:#1d8d68;" onclick="cleardropdown(3)">Clear</a> 
+                                                    &nbsp;<a class="btn" style="background-color:#1d8d68;" onclick="filterTable(3)">Apply</a>
+                                                </div>
+                                            </div>
+                                        </th>
+                                      
+                                        <th >
+                                            AMOUNT
+                                            <a onclick="toggleDropdown(4)">&nbsp;<i class="fa fa-filter" aria-hidden="true"></i></a>
+                                            <div class="dropdown-content" id="dropdownContent4">
+                                                <label for="filterInput4" style="color: black; text-align: left;">Equal To</label>
+                                                <input type="text" id="filterInput4" />
+                                                <div class="button-row">
+                                                    <a class="btn " style="background-color:#1d8d68;" onclick="cleardropdown(4)">Clear</a> 
+                                                    &nbsp;<a class="btn " style="background-color:#1d8d68;" onclick="filterTable(4)">Apply</a>
+                                                </div>
+                                            </div>
+                                        </th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    {% for i in sales %}
+                                    <tr>
+                                        <td>{{forloop.counter}}</td>
+                                        <td>{{i.date}}</td>
+                                        <td>{{i.bill_number}}</td>
+                                        {% if i.party_name != "" %}<td>{{i.party_name}}</td>{% else %}<td>Nill</td>{% endif %}
+                                        <td>{{i.total_amount}}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+
+<script>
+    // Function to generate PDF from the table
+    function generatePDF() {
+        var element = document.getElementById('report'); // Assuming 'credittable' is the ID of your table element
+        var filename = 'sales_report.pdf';
+        var opt = {
+            margin: 1,
+            filename: filename,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+        };
+        html2pdf().set(opt).from(element).save();
+    }
+</script>
+
+
+<!-- Share bill Modal -->
+<div class="modal fade" id="shareReportEmail" tabindex="-1" aria-labelledby="shareReportEmailLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content" style="background: #ddddbe;">
+        <div class="modal-header" style="border-bottom: 1px solid #ffffff;">
+          <h5 class="modal-title text-dark" id="shareReportEmailLabel">Share Report Via Email</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="{% url 'shareSalesReportsToEmail' %}" method="post" class="needs-validation" id="share_to_email_form">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="emailIds">Email IDs</label>
+                <textarea class="form-control" name="email_ids" id="emailIds" rows="3" placeholder="Multiple emails can be added by separating with a comma(,)." required></textarea>
+            </div>
+            <div class="form-group mt-2">
+                <label for="item_unitname">Message(optional)</label>
+                <textarea name="email_message" id="email_message" class="form-control" cols="" rows="4" placeholder="This message will be sent along with the Stock Report."></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer d-flex justify-content-center" style="border-top: 1px solid #ffffff;">
+          <button type="submit" id="share_with_email" class="submitShareEmailBtn w-50 text-uppercase">SEND MAIL</button>
+        </div>
+      </div>
+    </div>
+</div>
+<script>
+    // Define global variables to store filter state
+var filters = {};
+
+// Function to toggle dropdown visibility
+function toggleDropdown(index) {
+    var dropdownContent = document.getElementById('dropdownContent' + index);
+    var isVisible = dropdownContent.style.display === 'block';
+    var allDropdowns = document.querySelectorAll('.dropdown-content');
+    allDropdowns.forEach(function (dropdown) {
+        dropdown.style.display = 'none';
+    });
+    dropdownContent.style.display = isVisible ? 'none' : 'block';
+}
+
+// Function to clear dropdown filter
+function cleardropdown(columnIndex) {
+$('#filterInput' + columnIndex).val('');
+filters[columnIndex] = '';
+filterTable(columnIndex);
+}
+
+// Function to filter the table based on the selected filter
+
+// JavaScript functions for filtering
+function filterTable(index) {
+var input;
+document.getElementById('dropdownContent' + index).style.display = 'none';
+if (index === 0) {
+    input = document.getElementById('filterInput' + index).value;
+} else {
+    input = document.getElementById('filterInput' + index).value.toUpperCase();
+}
+var table = document.getElementById('sales_reports_table');
+var rows = table.getElementsByTagName('tr');
+var emptyMessage = document.getElementById('emptyMessage');
+var isEmpty = true;
+for (var i = 1; i < rows.length; i++) {
+    var cells = rows[i].getElementsByTagName('td');
+    var cell = cells[index];
+    if (cell) {
+        var textValue = cell.textContent || cell.innerText;
+        if (index === 0) {
+            if (input==''){
+                rows[i].style.display = 'table-row';
+                    isEmpty = false;
+            }else{
+                dateval  = textValue.replace(/(\d{2})-(\d{2})-(\d{2})/, "$2-$1-$3");
+                inputval  = input.replace(/(\d{2})-(\d{2})-(\d{2})/, "$2-$1-$3");
+                const formattedDate = formatDateString(input);
+                if (dateval === formattedDate) {
+                    rows[i].style.display = 'table-row';
+                    isEmpty = false;
+                } else {
+                    rows[i].style.display = 'none';
+                }
+            }
+        } else {
+            if (textValue.toUpperCase().includes(input)) {
+                rows[i].style.display = 'table-row';
+                isEmpty = false;
+            } else {
+                rows[i].style.display = 'none';
+            }
+        }
+    }
+}
+emptyMessage.style.display = isEmpty ? 'block' : 'none';
+calculatetotal()
+}
+
+function formatDateString(inputDate) {
+const parsedDate = new Date(inputDate);
+const day = parsedDate.getDate();
+const month = parsedDate.getMonth() + 1;
+const year = parsedDate.getFullYear();
+const formattedDate = `${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}-${year}`;
+return formattedDate;
+}
+</script>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.4/jspdf.debug.js" ></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+<script>
+    $(document).ready(()=>{
+        var nav_links = $(".nav-item.nav-link");
+        
+        for(var i = 0; i < nav_links.length; i++){
+            $(nav_links[i]).removeClass('active')
+            if($(nav_links[i]).hasClass('nav-salesreports')){
+                $(nav_links[i]).addClass('active');
+                break;
+            }
+        }
+    });
+
+    $(document).ready(()=>{
+        var id = `{{id}}`;
+        if(id != "" && id != "0"){
+            document.querySelector('#item_dropdown').value = id;
+        }
+    });
+
+    // window.onload = function(){
+    //     alert(`{{id}}`)
+    //     if(`{{id}}` != null){
+    //         document.querySelector('#item_dropdown').value = `{{id}}`;
+    //     }
+    // }
+
+    $(document).ready(function(){
+        $('#share_with_email').on('click',function(){
+            var emailsInput = document.getElementById('emailIds');
+            var emailsString = emailsInput.value.trim();
+
+            var emails = emailsString.split(',').map(function(email) {
+                return email.trim();
+            });
+
+            var emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+
+            var invalidEmails = []
+            if(emailsString == ""){
+                alert('Enter valid email addresses..')
+            }
+            else{
+                for (var i = 0; i < emails.length; i++) {
+                    var currentEmail = emails[i];
+
+                    if (currentEmail!="" && !emailRegex.test(currentEmail)) {
+                        console.log(currentEmail + ' is invalid!');
+                        invalidEmails.push(currentEmail)
+                    }
+                }
+                
+                if(invalidEmails.length > 0){
+                    alert('Invalid emails..Please check!\n'+invalidEmails)
+                    // alert(invalidEmails)
+                }else{
+                    $('#share_to_email_form').submit();
+                }
+            }
+        })
+    });
+    
+    // $(document).on('change', '#item_dropdown',function(){
+    //     var id = $(this).val()
+        
+    // });
+
+    function ExportToExcel(type, fn, dl) {
+        var elt = document.getElementById('sales_reports_table');
+        var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
+        return dl ? XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }) : XLSX.writeFile(wb, fn || ('Sales_Reports.' + (type || 'xlsx')));
+    }
+
+
+    function printfunction(){
+       
+       
+        var tableHeadings = document.getElementById('tableHeadings');
+        tableHeadings.innerHTML = `
+            <th>#</th>
+            <th>DATE</th>
+            <th>BILL NO</th>
+            <th>PARTY NAME</th>
+            <th>AMOUNT</th>
+        `;
+
+        // Save the current body content
+        var originalBodyContent = document.body.innerHTML;
+
+        // Replace body content with the table
+        document.body.innerHTML = document.getElementById('report').innerHTML;
+
+        // Print the table
+        window.print();
+
+        // Restore the original body content
+        document.body.innerHTML = originalBodyContent;
+    }
+
+    $(document).ready(function () {
+        $('#item_dropdown').selectize({
+            sortField: 'text'
+        });
+    });
+
+    $(document).ready(function(){
+        $(".share-dropdown").click(function(){
+            $(this).find(".share-dropdown-menu").slideToggle("fast");
+        });
+    });
+    $(document).on("click", function(event){
+        var $trigger = $(".share-dropdown");
+        if($trigger !== event.target && !$trigger.has(event.target).length){
+            $(".share-dropdown-menu").slideUp("fast");
+        }
+    });
+</script>
+{% endblock %}

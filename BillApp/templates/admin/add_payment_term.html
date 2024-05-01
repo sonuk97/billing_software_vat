@@ -1,0 +1,101 @@
+{% extends 'admin/admin_index.html' %}
+{% load static %}
+{% block content %}
+<style>
+    main{
+        background: #ddddbeed;
+    }
+    .btn:focus{
+        box-shadow: none;
+    }
+    .submit_btn, .submitunit_btn {
+        background: #c6aa589e;
+        border: 1px solid white;
+        border-radius: 4px;
+        color: white;
+        font-weight: 600;
+        padding: 0.5rem 1rem;
+    }
+    .submit_btn:hover, .submitunit_btn:hover{
+        background: #C6AA58;
+    }
+</style>
+
+<div class="page-content">
+    <div class="card radius-15" style="background-color: #ddddbeed;">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12 col-lg-12 col-xl-12">
+                    <div class="card" style="background-color: #eae9c4;">
+                        <div class="row no-gutters">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8 mt-4 mb-4">
+                                <center>
+                                    <h4 class="card-title text-dark">ADD PAYMENT TERM</h4>
+                                </center>
+                            </div>
+                            <div class="col-md-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-9 col-lg-9">
+                   <form action="{% url 'createPaymentTerm' %}" method="post" class="needs-validation" id="paymentForm">
+                    {% csrf_token %}
+                        <div class="row mt-3">
+                            <div class="col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    <label for="duration">Duration</label>
+                                    <input type="number" name="duration" id="duration" class="form-control" autocomplete="off" min="1" step="1" required />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-12 col-lg-12">
+                                <div class="form-group">
+                                    <label for="term">Term</label>
+                                    <select class="form-control" name="term" id="term" required>
+                                            <option value="Days" selected>Days</option>
+                                            <option value="Months">Months</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-5 mb-5">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3">
+                                <button class="submit_btn w-100 text-uppercase" type="submit" name="next_term">Save & Next</button>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="submit_btn w-100 text-uppercase" type="submit">Save</button>
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+
+                    </form> 
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<script>
+    $(document).ready(()=>{
+        var nav_links = $(".nav-item.nav-link");
+        
+        for(var i = 0; i < nav_links.length; i++){
+            $(nav_links[i]).removeClass('active')
+            if($(nav_links[i]).hasClass('nav-payment-terms')){
+                $(nav_links[i]).addClass('active');
+                break;
+            }
+        }
+    });
+</script>
+{% endblock %}

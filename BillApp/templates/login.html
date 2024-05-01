@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <!-- <link href="{% static 'assets/css/pace.min.css' %}" rel="stylesheet"/>
+    <script src="{% static 'assets/js/pace.min.js' %}"></script> -->
+    <script
+            src="https://kit.fontawesome.com/64d58efce2.js"
+            crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}">
+    <title>BillingSoftware | Sign In</title>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer" ></script>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body,
+        input {
+            font-family: "Poppins", sans-serif;
+        }
+        .login-section{
+            transition: transform 1.1s ease-in-out;
+            transition-delay: 0.4s;
+        }
+        .register-section{
+            transition: transform 1.1s ease-in-out;
+            transition-delay: 0.4s;
+        }
+        .login-form-section
+        {
+            height: 100vh;
+            background: #003e29;
+            align-items: center;
+            display: flex;
+            justify-content: center;
+        }
+        .reg-form-section
+        {
+            height: max-content;
+            padding: 2.5rem 0;
+            background: #003e29;
+            align-items: center;
+            display: flex;
+            justify-content: center;
+        }
+
+        form {
+            display: flex;
+            width: 75%;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0rem 2rem;
+            transition: all 0.2s 0.7s;
+        }
+
+        .title {
+            font-size: 2.2rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        .forgot-password
+        {
+            text-decoration: none;
+            font-size: 12px;
+            color: rgb(235, 235, 243) !important;     
+        }
+        .input-field {
+            max-width: 380px;
+            width: 100%;
+            /* background-color: #f0f0f0; */
+            background-color: #fff;
+            margin: 10px 0;
+            height: 55px;
+            border-radius: 10px;
+            display: grid;
+            grid-template-columns: 15% 85%;
+            padding: 0 0.4rem;
+            position: relative;
+        }
+        .input-field.textarea {
+            max-width: 380px;
+            width: 100%;
+            /* background-color: #f0f0f0; */
+            background-color: #fff;
+            margin: 10px 0;
+            height: 100px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            padding: 0 0.4rem;
+            position: relative;
+        }
+
+        .input-field i {
+            text-align: center;
+            line-height: 55px;
+            color: #acacac;
+            transition: 0.5s;
+            font-size: 1rem;
+        }
+
+        .input-field input{
+            background: none;
+            outline: none;
+            border: none;
+            line-height: 1;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #333;
+        }
+        .input-field textarea {
+            background: none;
+            outline: none;
+            border: none;
+            resize: none;
+            line-height: 1;
+            height: 100%;
+            padding: 1rem 0.5rem;
+            width: 100%;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        .input-field input::placeholder , .input-field textarea::placeholder{
+            color: #aaa;
+            font-weight: 500;
+        }
+
+        .btn {
+            width: 150px;
+            background-color: #17815d;
+            border: 1px solid #e5e5e5;
+            outline: none;
+            height: 49px;
+            border-radius: 49px;
+            color: #fff;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: 0.5s;
+        }
+
+        .btn:hover {
+            background-color: #fff;
+            color: #003e27;
+            border: 2px solid #003e27;
+        }
+
+        .image {
+            height: 65vh;
+            width: 100%;
+            transition: transform 1.1s ease-in-out;
+            transition-delay: 0.4s;
+        }
+
+        .panel {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: space-around;
+            text-align: center;
+            z-index: 6;
+        }
+
+        .left-panel {
+            /* pointer-events: all; */
+            padding: 3rem 17% 2rem 12%;
+        }
+
+        .right-panel {
+            /* pointer-events: none; */
+            /* padding: 3rem 12% 2rem 17%; */
+            padding: 3rem 24% 2rem 24%;
+        }
+
+        .panel .content {
+            /* color: #fff; */
+            transition: transform 0.9s ease-in-out;
+            transition-delay: 0.6s;
+        }
+
+        .panel h3 {
+            font-weight: 600;
+            line-height: 1;
+            font-size: 1.5rem;
+        }
+
+        .panel p {
+            font-size: 0.95rem;
+            padding: 0.7rem 0;
+        }
+
+        .btn.transparent {
+            margin: 0;
+            /* background: none; */
+            border: 2px solid #003e27;
+            width: 130px;
+            height: 41px;
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 870px) {
+
+            .panel {
+                flex-direction: row;
+                justify-content: space-around;
+                align-items: center;
+                padding: 2.5rem 8%;
+                grid-column: 1 / 2;
+            }
+
+            .right-panel {
+                grid-row: 3 / 4;
+            }
+
+            .left-panel {
+                grid-row: 1 / 2;
+            }
+
+            .image {
+                width: 200px;
+                transition: transform 0.9s ease-in-out;
+                transition-delay: 0.6s;
+            }
+
+            .panel .content {
+                padding-right: 15%;
+                transition: transform 0.9s ease-in-out;
+                transition-delay: 0.8s;
+            }
+
+            .panel h3 {
+                font-size: 1.2rem;
+            }
+
+            .panel p {
+                font-size: 0.7rem;
+                padding: 0.5rem 0;
+            }
+
+            .btn.transparent {
+                width: 110px;
+                height: 35px;
+                font-size: 0.7rem;
+            }
+        }
+        @media (max-width:768px) {
+            .login-section .row {
+                display: flex;
+                flex-direction: column-reverse;
+            }
+        }
+        @media (max-width: 570px) {
+            form {
+                padding: 0 1.5rem;
+            }
+
+            .image {
+                display: none;
+            }
+
+            .panel .content {
+                padding: 0.5rem 1rem;
+            }
+
+        }
+
+        /* The alert message box */
+        .alert {
+            padding: 15px;
+            background-color: rgb(155, 155, 155); /* Red */
+            /* color: darkred; */
+            color: white;
+            margin-bottom: 15px;
+            width: 60%;
+            height: 70px;
+        }
+
+        /* The close button */
+        .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        /* When moving the mouse over the close button */
+        .closebtn:hover {
+            color: black;
+        }
+        .forgot-password
+        {
+            text-decoration: none;
+            font-size: 12px;
+            color: rgb(42, 41, 85);     
+        }
+        .forgot-password:hover
+        {
+            color: rgb(35, 34, 103); 
+            opacity: 0.8;  
+        }
+        .submit_btn, .submitunit_btn {
+            background: #c6aa589e;
+            border: 1px solid white;
+            border-radius: 4px;
+            color: white;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+        }
+        .submit_btn:hover, .submitunit_btn:hover{
+            background: #C6AA58;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="login-section">
+            <div class="row">
+                <div class="col-md-6 col-lg-6">
+                    <div class="panel left-panel">
+                        <div class="content d-flex justify-content-center w-100">
+                            <h3>Welcome Back.!</h3>
+                            <!-- <h3>New here ?</h3>
+                            <p>
+                                Register details here to get started.!
+                            </p>
+                            <button class="btn transparent" id="sign-up-btn">
+                                Sign up
+                            </button> -->
+                        </div>
+                        <img src="/static/assets/img/sup_log.jpg" class="image" alt=""/>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6 px-0">
+                    <div class="login-form-section">
+                        <form action="{% url 'userLogin' %}" method="post" class="sign-in-form">
+                            {% csrf_token %}
+                            <h2 class="title text-uppercase">LOGIN</h2>
+                            <div class="input-field">
+                                <i class="fas fa-user"></i>
+                                <input type="text" placeholder="Username" name="username" required/>
+                            </div>
+                            <div class="input-field">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" placeholder="Password" name="password" required/>
+                            </div>
+                            <input type="submit" value="Login" class="btn solid"/>
+                            <a href="#forgot_password" data-bs-toggle="modal" class="forgot-password">Forgot password...?</a>
+                            <msg></msg>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="register-section" style="display: none;">
+            <div class="row">
+                <div class="col-md-6 col-lg-6 px-0">
+                    <div class="reg-form-section">
+                        <form action="{% url 'registerUser' %}" method="post" class="sign-up-form" id="register-form" onsubmit="return validate()">
+                            {% csrf_token %}
+                            <h2 class="title text-uppercase">REGISTER</h2>
+                            <div class="input-field">
+                                <i class="fas fa-user"></i>
+                                <input type="text" placeholder="Username" name="username" id="user" required/>
+                            </div>
+                            <div class="input-field">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" placeholder="Email" name="email" pattern="[^@\s]+@[^@\s]+\.[^@\s]+" id="email" required/>
+                            </div>
+                            <div class="input-field">
+                                <i class="fas fa-phone"></i>
+                                <input type="tel" placeholder="Phone Number" name="phone" id="phone" title="Ex: 9048986656" required/>
+                            </div>
+                            <div class="input-field">
+                                <i class="fa fa-building"></i>
+                                <input type="text" placeholder="Company Name" name="company" id="company" required/>
+                            </div>
+                            <div class="input-field">
+                                <i class="fa fa-pencil"></i>
+                                <input type="text" placeholder="GST Number" name="gstnum" id="gstin" title="Ex: 22AAAAA0000A1Z5"/>
+                                <div class="text-danger" style="font-size: 0.85rem; width: max-content;font-weight: 600;" id="gstErr"></div>
+                            </div>
+                            <div class="input-field textarea">
+                                <!-- <i class="fa fa-address-card"></i> -->
+                                <textarea name="address" placeholder="Address" id="address" cols="" rows="3" required></textarea>
+                            </div>
+                            <div class="input-field">
+                                <i class="fa fa-globe"></i>
+                                <input type="text" placeholder="Country" name="country" id="couuntry" required/>
+                            </div>
+                            <div class="input-field">
+                                <i class="fa fa-map-signs"></i>
+                                <input type="text" placeholder="State" name="state" id="state" required/>
+                            </div>
+                            <div class="input-field">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" placeholder="Password" 
+                                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"  name="password" id="pwd"/>
+                                <div class="text-danger" style="font-size: 0.85rem; width: max-content;" id="passErr"></div>
+                            </div>
+                            <div class="input-field">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" placeholder="Confirm Password"
+                                pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"  name="confirmPassword" id="cnfpwd"/>
+                                <div class="text-danger" style="font-size: 0.85rem; width: max-content;" id="cnfrmPassErr"></div>
+                            </div>
+                            <input type="submit" class="btn" value="Sign up"/>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6">
+                    <div class="panel right-panel">
+                        <div class="content">
+                            <h3>Already have an account ?</h3>
+                            <p>
+                                Sign In from here.!
+                            </p>
+                            <button class="btn transparent" id="sign-in-btn">
+                                Sign in
+                            </button>
+                        </div>
+                        <img src="{% static 'assets/img/sup_reg.jpg' %}" class="image" alt=""/>
+                    </div>
+                </div>
+            </div>
+        </div>         
+    </div>
+
+
+<!-- Forgot Password Modal -->
+<div class="modal fade" id="forgot_password" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="forgot_passwordLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content" style="background: #ddddbe;">
+        <div class="modal-header" style="border-bottom: 1px solid #ffffff;">
+          <h5 class="modal-title text-dark" id="forgot_passwordLabel">Forgot Password</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="post" class="needs-validation w-100" id="forgot_pass_form">
+            {% csrf_token %}
+            <div class="form-group w-100">
+                <label for="item_unitsymbol">Enter Your registered Email ID</label>
+                <input type="email" class="form-control" name="forgot_email" id="forgot_email" required>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer d-flex justify-content-center" style="border-top: 1px solid #ffffff;">
+          <button type="button" id="send_code" class="submit_btn w-50 text-uppercase">SEND CODE</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+<script>
+    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    $(document).on("click","#send_code",function(){
+        var email = $("#forgot_email").val();
+        if (email ==""){
+            swal({
+                position: "top-end",
+                icon: "warning",
+                title: "Enter Email.!",
+            });
+        }else if(!emailRegex.test(email)){
+            swal({
+                position: "top-end",
+                icon: "warning",
+                title: "Invalid Email.!",
+            });
+        }
+        else{
+            $.ajax({
+            type : 'POST',
+            url:"{% url 'forgotPassword' %}",
+            data:{
+                email : email,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            
+            success: function(response) {
+                console.log("AJAX Success - Response Data:", response);
+                document.getElementById("forgot_pass_form").reset();
+                $('#forgot_password').modal('toggle');
+
+                if(response.message == "success"){
+                    swal({
+                        position: "top-end",
+                        icon: "success",
+                        title: "Password has been sent via mail.!",
+                    });
+                }else if(response.message == 'not_found'){
+                    swal({
+                        position: "top-end",
+                        icon: "error",
+                        title: "Incorrect Email ID or does not exist, Please check.!",
+                    });
+                }
+                else{
+                    swal({
+                        position: "top-end",
+                        icon: "warning",
+                        title: "Something went wrong.!",
+                    });
+                }
+            },         
+        });
+        }
+    });
+
+
+
+    $(document).ready(()=>{
+        // $('#register-form')[0].reset();
+        document.getElementById('register-form').reset();
+    })
+    const sign_in_btn = document.querySelector("#sign-in-btn");
+    const sign_up_btn = document.querySelector("#sign-up-btn");
+    const container = document.querySelector(".container-main");
+
+    sign_up_btn.addEventListener("click", () => {
+        // container.classList.add("sign-up-mode");
+        $('.login-section').hide(1000);
+        $('.register-section').show(1000);
+        $("#register-form").addClass('form_active');
+    });
+
+    sign_in_btn.addEventListener("click", () => {
+        // container.classList.remove("sign-up-mode");
+        $('.register-section').hide(1000);
+        $('.login-section').show(1000);
+    });
+
+</script>
+<script>
+    function validate() {
+        var pwd = document.getElementById("pwd").value;
+        var cnfpwd = document.getElementById("cnfpwd").value;
+        var usnm = document.getElementById("user").value;
+        var gstin = document.getElementById('gstin').value;
+        const gstregex = /\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}/;
+        const mobPattern = /^\d{10}$/;
+        const gstinPattern = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}$/;
+
+        var phone = $('#phone').val();
+        var gstinput = $('#gstin').val();
+        
+        if(! mobPattern.test(phone)){
+            alert('Invalid.! Mobile Number should have 10 digits..')
+            return false;
+        }
+
+        if(gstin != ""){
+            if(! gstinPattern.test(gstinput)){
+                alert('Invalid GST Number..\n Ex: 22AAAAA0000A1Z5')
+                return false;
+            }
+        }
+        
+
+        // if (gstin !="" && !gstregex.test(gstin)){
+        //     document.getElementById('gstErr').innerHTML = "Invalid..! Ex: '22AAAAA0000A1Z5'"
+        //     return false;
+        // }else{
+        //     document.getElementById('gstErr').innerHTML = ""
+        // }
+
+        if (pwd.length < 8 || pwd.length > 18) {
+            alert("Password length should be 8-18");
+            // document.getElementById('passErr').innerHTML = "Password length should be 8-18"
+            return false;
+        }else{
+            // document.getElementById('passErr').innerHTML = "";
+        }
+        if (pwd != cnfpwd) {
+            alert("password and confirm password does not match.!");
+            // document.getElementById('cnfrmPassErr').innerHTML = "password and confirm password does not match.!"
+            return false;
+        }else{
+            // document.getElementById('cnfrmPassErr').innerHTML = ""
+        }
+        return true;
+    }
+</script>
+
+<script>
+    //static/js/script.js
+$(document).ready(function(){
+  $("#email").blur(function () {
+    var email = $(this).val();
+    // alert(email)
+
+    $.ajax({
+      method:'GET',
+      url: "{% url 'validateEmail' %}",
+      data: {
+        'email': email
+      },
+      dataType: 'json',
+      success: function (data) {
+        if (data.is_taken) {
+          alert("Email already exists.!");
+        }
+      }
+    });
+
+  });
+});
+$(document).ready(function(){
+    $("#user").blur(function () {
+        if($('#register-form').hasClass('form_active')){
+            var user = $(this).val();
+            $.ajax({
+                url: "{% url 'validateUsername' %}",
+                data: {
+                'username': user
+                },
+                dataType: 'json',
+                success: function (data) {
+                if (data.is_taken) {
+                    alert("User name already exists.");
+                }
+                }
+            });   
+        }
+    });
+});
+
+
+$(document).ready(function(){
+    $("#phone").blur(function () {
+        var phone = $(this).val();
+        if($(this).val()!=""){
+            $.ajax({
+            method:'GET',
+            url: "{% url 'validatePhone' %}",
+            data: {
+                'phone': phone
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data.is_taken) {
+                alert("Phone Number already exists.!");
+                }
+            }
+            });
+        }
+    });
+});
+
+$(document).ready(function(){
+    $("#company").blur(function () {
+        var company = $(this).val();
+        if($(this).val()!=""){
+            $.ajax({
+            method:'GET',
+            url: "{% url 'validateCompany' %}",
+            data: {
+                'company': company
+            },
+            dataType: 'json',
+            success: function (data) {
+                if (data.is_taken) {
+                alert("Company Name already exists.!");
+                }
+            }
+            });
+        }
+    });
+});
+</script>
+
+{%if messages%} {%for message in messages%} {%if message.tags == "success"%}
+<script>
+  swal({
+    position: "top-end",
+    icon: "success",
+    title: "{{message}}",
+  });
+</script>
+{%elif message.tags == "warning"%}
+<script>
+  swal({
+    position: "top-end",
+    icon: "warning",
+    title: "{{message}}",
+  });
+</script>
+{%elif message.tags == "error"%}
+<script>
+  swal({
+    position: "top-end",
+    icon: "error",
+    title: "{{message}}",
+  });
+</script>
+{%else%}
+<script>
+  swal({
+    position: "top-end",
+    icon: "info",
+    title: "{{message}}",
+  });
+</script>
+{%endif%} {%endfor%} {%endif%}
+</body>
+</html>

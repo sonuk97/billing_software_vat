@@ -1,0 +1,3291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <!-- <link href="{% static 'assets/css/pace.min.css' %}" rel="stylesheet" />
+  <script src="{% static 'assets/js/pace.min.js' %}"></script> -->
+
+  <title>BillingSoftware</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+  <link href="{% static 'assets/img/favicon.png' %}" rel="icon">
+  <!-- <link rel="icon" href="" type="image/png" /> -->
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="{% static 'assets/vendor/aos/aos.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+  <link href="{% static 'assets/vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Template Main CSS File -->
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" /> -->
+  
+  <script src="https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@3.0.3/dist/index.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<style>
+    body {
+  font-family: "Open Sans", sans-serif;
+  color: #444444;
+}
+
+a {
+  color: #fdc134;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #fdd067;
+  text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Raleway", sans-serif;
+}
+
+/*--------------------------------------------------------------
+# Back to top button
+--------------------------------------------------------------*/
+.back-to-top {
+  position: fixed;
+  visibility: hidden;
+  opacity: 0;
+  right: 15px;
+  bottom: 15px;
+  z-index: 99999;
+  background: #C6AA58;
+  width: 40px;
+  height: 40px;
+  border-radius: 50px;
+  transition: all 0.4s;
+}
+
+.get-trial-button {
+  position: fixed;
+  visibility: hidden;
+  color: #fff;
+  font-weight: bold;
+  opacity: 0;
+  left: 15px;
+  bottom: 15px;
+  z-index: 99999;
+  background: #C6AA58;
+  width: 125px;
+  height: 40px;
+  border-radius: 5px;
+  transition: all 0.4s;
+}
+
+.back-to-top i, .get-trial-button i {
+  font-size: 24px;
+  color: #fff;
+  line-height: 0;
+}
+
+.back-to-top:hover, .get-trial-button:hover {
+  background: #003e27;
+  color: #fff;
+}
+
+/* .get-trial-button:hover {
+  background: #003e27;
+  color: #fff;
+} */
+
+.back-to-top.active, .get-trial-button.active {
+  visibility: visible;
+  opacity: 1;
+}
+
+/*--------------------------------------------------------------
+# Disable aos animation delay on mobile devices
+--------------------------------------------------------------*/
+@media screen and (max-width: 768px) {
+  [data-aos-delay] {
+    transition-delay: 0 !important;
+  }
+}
+
+/*--------------------------------------------------------------
+# Header
+--------------------------------------------------------------*/
+#header {
+  position: relative;
+  z-index: 997;
+  transition: all 0.5s;
+  padding: 16px 0;
+  /* background: #003e27; */
+  background:#222B31 !important;
+  border-bottom:4px solid #C6AA58 !important;
+}
+
+#header .logo h1 {
+  font-size: 24px;
+  margin: 0;
+  padding: 10px 0;
+  line-height: 1;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  font-family: "Poppins", sans-serif;
+}
+
+#header .logo h1 a, #header .logo h1 a:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+#header .logo h1 a span, #header .logo h1 a:hover span {
+  color: #fdc134;
+}
+
+#header .logo img {
+  padding: 0;
+  margin: 0;
+  max-height: 40px;
+}
+
+/*--------------------------------------------------------------
+# Navigation Menu
+--------------------------------------------------------------*/
+/**
+* Desktop Navigation 
+*/
+.navbar {
+  padding: 0;
+}
+
+.navbar ul {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  list-style: none;
+  align-items: center;
+}
+
+.navbar li {
+  position: relative;
+}
+
+.navbar a {
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: 600;
+  /* color: #fff; */
+  color: #a3bfc6;
+  white-space: nowrap;
+  position: relative;
+  transition: 0.3s;
+  z-index: 1000;
+}
+
+.hover{
+  display:block;
+  position:absolute;
+  width:0%;
+  height:100%;
+  top:0px;
+  left:0px;
+  background:#C6AA58 !important;
+  z-index:0;
+  opacity:0;
+}
+
+.navbar a i {
+  font-size: 12px;
+  line-height: 0;
+  margin-left: 5px;
+}
+
+.navbar a:hover, .navbar .active, .navbar li:hover > a {
+  color: #fff;
+}
+
+.navbar .loginBtn {
+  background: #003e27 !important;
+  font-weight: bold;
+  color: #fff !important;
+  padding: 4px 25px 6px 25px;
+  margin-left: 30px;
+  border-radius: 50px;
+  border: 2px solid #C6AA58 !important;
+}
+
+.navbar .loginBtn:hover {
+  background: #C6AA58 !important;
+  color: #fff;
+}
+
+.navbar .dropdown ul {
+  display: block;
+  position: absolute;
+  left: 14px;
+  top: calc(100% + 30px);
+  margin: 0;
+  padding: 10px 0;
+  z-index: 99;
+  opacity: 0;
+  visibility: hidden;
+  background: #fff;
+  box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
+  transition: 0.3s;
+  border-radius: 4px;
+}
+
+.navbar .dropdown ul li {
+  min-width: 200px;
+}
+
+.navbar .dropdown ul a {
+  padding: 10px 20px;
+  font-size: 14px;
+  text-transform: none;
+  font-weight: 500;
+  color: #3e6f9b;
+}
+
+.navbar .dropdown ul a i {
+  font-size: 12px;
+}
+
+.navbar .dropdown ul a:hover, .navbar .dropdown ul .active:hover, .navbar .dropdown ul li:hover > a {
+  color: #fff;
+}
+
+.navbar .dropdown:hover > ul {
+  opacity: 1;
+  top: 100%;
+  visibility: visible;
+}
+
+.navbar .dropdown .dropdown ul {
+  top: 0;
+  left: calc(100% - 30px);
+  visibility: hidden;
+}
+
+.navbar .dropdown .dropdown:hover > ul {
+  opacity: 1;
+  top: 0;
+  left: 100%;
+  visibility: visible;
+}
+
+@media (max-width: 1366px) {
+  .navbar .dropdown .dropdown ul {
+    left: -90%;
+  }
+  .navbar .dropdown .dropdown:hover > ul {
+    left: -100%;
+  }
+}
+
+/**
+* Mobile Navigation 
+*/
+.mobile-nav-toggle {
+  color: #C6AA58;
+  font-size: 28px;
+  cursor: pointer;
+  display: none;
+  line-height: 0;
+  transition: 0.5s;
+  position: fixed;
+  right: 15px;
+  top: 15px;
+  z-index: 9998;
+  border: 0;
+}
+
+@media (max-width: 991px) {
+  .mobile-nav-toggle {
+    display: block;
+  }
+  .navbar ul {
+    display: none;
+  }
+}
+
+.navbar-mobile {
+  position: fixed;
+  overflow: hidden;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(18, 33, 46, 0.9);
+  transition: 0.3s;
+  z-index: 999;
+}
+
+.navbar-mobile .mobile-nav-toggle {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+.navbar-mobile ul {
+  display: block;
+  position: absolute;
+  top: 55px;
+  right: 15px;
+  bottom: 15px;
+  left: 15px;
+  padding: 10px 0;
+  border-radius: 10px;
+  background-color: #222B31;
+  overflow-y: auto;
+  transition: 0.3s;
+}
+
+.navbar-mobile a {
+  padding: 10px 20px;
+  font-size: 15px;
+  color: #a3bfc6;
+}
+
+.navbar-mobile a:hover, .navbar-mobile .active, .navbar-mobile li:hover > a {
+  color: #fff;
+}
+
+.navbar-mobile .loginBtn {
+  margin: 15px;
+  display: block;
+  border: 0;
+}
+
+.navbar-mobile .dropdown ul {
+  position: static;
+  display: none;
+  margin: 10px 20px;
+  padding: 10px 0;
+  z-index: 99;
+  opacity: 1;
+  visibility: visible;
+  background: #fff;
+  box-shadow: 0px 0px 30px rgba(127, 137, 161, 0.25);
+}
+
+.navbar-mobile .dropdown ul li {
+  min-width: 200px;
+}
+
+.navbar-mobile .dropdown ul a {
+  padding: 10px 20px;
+}
+
+.navbar-mobile .dropdown ul a i {
+  font-size: 12px;
+}
+
+.navbar-mobile .dropdown ul a:hover, .navbar-mobile .dropdown ul .active:hover, .navbar-mobile .dropdown ul li:hover > a {
+  color: #fff;
+}
+
+.navbar-mobile .dropdown > .dropdown-active {
+  display: block;
+}
+
+/*--------------------------------------------------------------
+# Hero Section
+--------------------------------------------------------------*/
+
+.carousel-control-next-icon, .carousel-control-prev-icon{
+    width: 1.5rem;
+    height: 4rem;
+    background-color: #9ea5a5d9;
+}
+
+.getTrialBtn1 {
+    right: unset;
+    left: 0;
+    margin-left: 15%;
+    margin-bottom: 2%;
+}
+
+.getTrialBtn2 {
+    right: 0;
+    left: unset;
+    margin-right: 15%;
+    margin-bottom: 2%;
+}
+
+/* .caption1{
+  text-align: start !important;
+}
+
+.caption2{
+  text-align: end !important;
+} */
+
+.caption1 h4, .caption2 h4 {
+  font-size : calc(1.3rem);
+}
+
+.caption1 p, .caption2 p {
+  font-size: 14px;
+}
+
+@media screen and (min-width: 1110px) {
+  .caption1 p, .caption2 p {
+    font-size: 16px;
+  }
+  .caption1 h4, .caption2 h4 {
+    font-size : calc(1.55rem);
+    margin: 18px 0px;
+  }
+}
+
+@media screen and (max-width: 1130px) {
+  .carousel-item{
+    padding: 3.15rem 0rem;
+  }
+}
+
+@media screen and (max-width: 885px) {
+
+  #header .logo h1 {
+    font-size: 23px;
+  }
+  .caption1 h4, .caption2 h4 {
+    font-size : calc(1.2rem);
+  }
+
+  .caption1 p, .caption2 p {
+    font-size: 12px;
+  }
+
+  #hero .btn-get-trial {
+    padding: 7px 12px !important;
+    font-size: 0.9rem;
+  }
+}
+
+@media screen and (max-width: 820px) {
+  .caption1 h4, .caption2 h4 {
+    font-size : calc(1.1rem);
+  }
+
+  .caption1 p, .caption2 p {
+    font-size: 11px;
+  }
+
+  #hero .btn-get-trial {
+    padding: 6px 12px !important;
+    font-size: 0.84rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .carousel-item{
+    padding: 3.3rem 0rem;
+  }
+
+  .caption1 h6, .caption2 h6 {
+    font-size : 0.93rem;
+  }
+
+  .caption1 h4, .caption2 h4 {
+    font-size : calc(1rem);
+  }
+
+  .caption1 p, .caption2 p {
+    font-size: 11px;
+  }
+
+  #hero .btn-get-trial {
+    padding: 6px 11px !important;
+    font-size: 0.8rem;
+  }
+}
+
+@media screen and (max-width: 695px) {
+  .carousel-item{
+    padding: 5rem 0rem;
+  }
+}
+
+@media screen and (max-width: 565px) {
+  #header .logo h1 {
+    font-size: 21px;
+  }
+  .carousel-item{
+    padding: 5.78rem 0rem;
+  }
+
+  .caption1 h4, .caption2 h4 {
+    font-size : calc(0.9rem);
+  }
+  
+  .caption1 h6, .caption2 h6 {
+    font-size : 0.85rem;
+  }
+
+  .caption1 p, .caption2 p {
+    font-size: 10px;
+  }
+
+  #hero .btn-get-trial {
+    padding: 5px 11px !important;
+    font-size: 0.7rem;
+  }
+}
+
+@media screen and (max-width: 510px) {
+  .carousel-item{
+    padding: 7.75rem 0rem;
+  }
+  .caption1 h4, .caption2 h4 {
+    font-size : calc(0.9rem);
+  }
+
+  .caption1 p, .caption2 p {
+    font-size: 9px;
+  }
+
+  #hero .btn-get-trial {
+    padding: 4px 11px !important;
+    font-size: 0.7rem;
+  }
+
+  .caption1 h6, .caption2 h6 {
+    font-size : 11px;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  #header .logo h1 {
+    font-size: 18px;
+  }
+  .carousel-item{
+    padding: 8rem 0rem;
+  }
+  .caption1 h6, .caption2 h6 {
+    font-size : 9px;
+  }
+}
+
+@media screen and (max-width: 350px) {
+  .carousel-item{
+    padding: 8.2rem 0rem;
+  }
+}
+
+@media screen and (max-width: 300px) {
+
+  .carousel-item{
+    padding: 9rem 0rem;
+  }
+  .caption1 h4, .caption2 h4 {
+    font-size : 10px;
+  }
+
+  .caption1 h6, .caption2 h6 {
+    font-size : 8px;
+  }
+
+  .caption1 p, .caption2 p {
+    font-size: 8px;
+  }
+}
+
+#hero {
+  width: 100%;
+  padding: 0 0 0 0;
+  /* background: #2c3733; */
+  background: black;
+  /* background: linear-gradient(180deg, #213b52 0%, #213c54 35%, #204564 100%); */
+}
+
+#hero h1 {
+  margin: 0 0 15px 0;
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 56px;
+  color: #d2e0ed;
+  font-family: "Poppins", sans-serif;
+}
+
+#hero h2 {
+  color: #fff;
+  margin-bottom: 30px;
+  font-size: 22px;
+}
+
+#hero .btn-get-trial {
+  color: #fff;
+  font-weight: bold;
+  padding: 8px 35px 10px 35px;
+  transition: all ease-in-out 0.3s;
+  display: inline-block;
+  background: #C6AA58;
+  position: relative;
+}
+
+.btn-get-trial::before,
+.btn-get-trial::after {
+  content: '';
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  border: 0px solid transparent;
+}
+.btn-get-trial::before {
+  top: -4px;
+  left: -4px;
+  border-top: 2px solid #C6AA58;
+  border-left: 2px solid #C6AA58;
+}
+.btn-get-trial::after {
+  bottom: -4px;
+  right: -4px;
+  border-bottom: 2px solid #C6AA58;
+  border-right: 2px solid #C6AA58;
+}
+.btn-get-trial:hover::before,
+.btn-get-trial:hover::after {
+  width: calc(100% + 6px);
+  height: calc(100% + 6px);
+}
+
+@media screen and (max-width: 768px) {
+  #hero .btn-get-trial {
+  padding: 10px 25px;
+}
+}
+
+/* #hero .btn-get-trial:hover {
+  background: #C6AA58;
+  color: #003e27;
+} */
+
+@media (max-width: 991px) {
+  #hero .hero-img {
+    text-align: center;
+  }
+  #hero .hero-img img {
+    width: 50%;
+  }
+}
+
+@media (max-width: 768px) {
+  #hero {
+    -moz-text-align-last: center;
+    text-align-last: center;
+  }
+  #hero h1 {
+    font-size: 28px;
+    line-height: 36px;
+  }
+  #hero h2 {
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 30px;
+  }
+  #hero .hero-img img {
+    width: 70%;
+  }
+}
+
+@media (max-width: 575px) {
+  #hero .hero-img img {
+    width: 80%;
+  }
+}
+
+.carousel_image1 {
+  animation: cr_imgMove1 25s linear infinite;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes cr_imgMove1 {
+  0% {
+    transform: translateX(0%);
+  }
+  50% {
+    transform: translateX(-10%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+.carousel_image2 {
+  animation: cr_imgMove2 25s linear infinite;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes cr_imgMove2 {
+  0% {
+    transform: translateX(0%);
+  }
+  50% {
+    transform: translateX(10%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+/*--------------------------------------------------------------
+# MAIN
+--------------------------------------------------------------*/
+
+/* #main {
+  border-top:4px solid #003e27 !important;
+} */
+/*--------------------------------------------------------------
+# Sections General
+--------------------------------------------------------------*/
+section {
+  padding: 60px 0;
+  overflow: hidden;
+}
+
+.section-bg {
+  border-top:4px solid #003e27 !important;
+  background: #192226;
+  /* background: linear-gradient(180deg, #f2f6fa 0%, #fff 100%); */
+}
+
+.section-title {
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+.section-title h2 {
+  font-size: 32px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  position: relative;
+  font-family: "Poppins", sans-serif;
+  color: #C6AA58;
+}
+
+.section-title h2::before {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 120px;
+  height: 1px;
+  background: #ddd;
+  bottom: 1px;
+  left: calc(50% - 60px);
+}
+
+.section-title h2::after {
+  content: '';
+  position: absolute;
+  display: block;
+  width: 40px;
+  height: 3px;
+  background: #C6AA58;
+  bottom: 0;
+  left: calc(50% - 20px);
+}
+
+.section-title p {
+  margin-bottom: 0;
+}
+
+/*--------------------------------------------------------------
+# About
+--------------------------------------------------------------*/
+.about .content + .content {
+  margin-top: 100px;
+}
+
+.about .content h3 {
+  font-weight: 700;
+  font-size: 26px;
+  color: #C6AA58;
+}
+
+.about .content ul {
+  list-style: none;
+  padding: 0;
+}
+
+.about .content ul li {
+  padding-bottom: 10px;
+  color: wheat;
+}
+
+.about .content ul i {
+  font-size: 20px;
+  padding-right: 4px;
+  color: #C6AA58;
+}
+
+.about .content p:last-child {
+  margin-bottom: 0;
+}
+
+#about p{
+  color: white;
+}
+
+.about_image {
+  animation: imgMove 30s linear infinite;
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes imgMove {
+  0% {
+    transform: translateY(0%);
+  }
+  50% {
+    transform: translateY(-20%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+/*--------------------------------------------------------------
+# PlanAndPricing
+--------------------------------------------------------------*/
+.pricing-box {
+  -webkit-box-shadow: 0px 5px 30px -10px rgba(0, 0, 0, 0.1);
+          box-shadow: 0px 5px 30px -10px rgba(0, 0, 0, 0.1);
+  padding: 35px 50px;
+  border-radius: 20px;
+  position: relative;
+  background-color: #e7e7e5d6;
+  z-index: 1;
+}
+
+.pricing-box p{
+  color: black !important;
+}
+
+.pricing-box .plan {
+  font-size: 34px;
+}
+
+.pricing-badge {
+  position: absolute;
+  top: 0;
+  z-index: 999;
+  right: 0;
+  width: 100%;
+  display: block;
+  font-size: 15px;
+  padding: 0;
+  overflow: hidden;
+  height: 100px;
+}
+
+.pricing-badge .badge {
+  float: right;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+  right: -67px;
+  top: 17px;
+  position: relative;
+  text-align: center;
+  width: 200px;
+  font-size: 13px;
+  margin: 0;
+  padding: 7px 10px;
+  font-weight: 500;
+  color: #ffffff;
+  background: #C6AA58;
+}
+.mb-2, .my-2 {
+    margin-bottom: .5rem!important;
+}
+#planAndPricing p {
+  line-height: 1.7;
+  color: whitesmoke;
+}
+
+.purchaseBtn{
+  background: #005938cf;
+  color: #C6AA58 !important;
+  font-weight: bold;
+}
+.purchaseBtn:hover{
+  background: #C6AA58;
+  color: #005938cf !important;
+}
+
+/*--------------------------------------------------------------
+# FAQ
+--------------------------------------------------------------*/
+
+#FAQs p{
+  color: white;
+}
+
+.faqs .accordion .card {
+  border: none;
+  margin-bottom: 30px;
+  position: relative;
+  z-index: 1;
+}
+.faqs .our-faq-wrapper .btn-link {
+  display: block;
+  width: 100%;
+  text-align: left;
+  position: relative;
+  background: #242c42;
+  color: #fff;
+  border-radius: 0;
+  padding: 7px 55px 7px 10px;
+  font-size: 16px;
+  overflow: hidden;
+  border: none;
+  font-weight:600;  
+}
+.faqs .our-faq-wrapper .btn-link:hover, .faqs .our-faq-wrapper .btn-link:focus {
+  text-decoration: none;
+}
+.faqs .our-faq-wrapper .btn-link:after {
+  position: absolute;
+  content: '\f068';
+  right: 15px;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  transform: translateY(-50%);
+  font-family: fontawesome;
+}
+.faqs .our-faq-wrapper .btn-link.collapsed:after {
+  content: '\f067';
+}
+.faqs .our-faq-wrapper .btn-link:before {
+  position: absolute;
+  content: '';
+  background: #C6AA58;
+  -webkit-transform: skew(-35deg);
+  transform: skew(-35deg);
+  height: 100%;
+  width: 50%;
+  left: 90%;
+  top: 0;
+}
+.faqs .card-header {
+  padding: 0;
+  background: transparent;
+  border-bottom: none;
+}
+.faqs .card-body {
+  position: relative;
+  background: #c6c7c6;
+}
+.faqs .card-body:after {
+  position: absolute;
+  content: '';
+  height: 4px;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+  background: #003e27;
+}
+.faqs .card-body:before {
+  position: absolute;
+  content: '';
+  height: 4px;
+  width: 50%;
+  left: 0;
+  bottom: 0;
+  background: #C6AA58;
+  z-index: 1;
+}
+
+/*--------------------------------------------------------------
+# Contact
+--------------------------------------------------------------*/
+.contact .info-box {
+  color: #444444;
+  text-align: center;
+  box-shadow: 0 0 30px rgba(214, 215, 216, 0.6);
+  padding: 20px 0 30px 0;
+  background: #fff;
+}
+
+.contact .info-box i {
+  font-size: 32px;
+  color: #C6AA58;
+  border-radius: 50%;
+  padding: 8px;
+  border: 2px dotted #fff7e5;
+}
+
+.contact .info-box h3 {
+  font-size: 20px;
+  color: #003e27;
+  font-weight: 700;
+  margin: 10px 0;
+}
+
+.contact .info-box p {
+  padding: 0;
+  line-height: 24px;
+  font-size: 14px;
+  margin-bottom: 0;
+}
+
+.mapouter{
+  position:relative;text-align:right;width:100%;height:400px;
+}
+.gmap_canvas {
+  overflow:hidden;background:none!important;width:100%;height:400px;
+}
+/* .gmap_iframe {
+  height:390px!important;
+} */
+@-webkit-keyframes animate-loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes animate-loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
+#footer {
+  color: #fff;
+  font-size: 14px;
+  position: relative;
+  z-index: 997;
+}
+
+#footer::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: #222B31;
+  z-index: -1;
+}
+
+#footer .footer-top {
+  position: relative;
+  z-index: -1;
+  text-align: center;
+  padding: 80px 0;
+}
+
+#footer .footer-top h3 {
+  font-size: 36px;
+  font-weight: 700;
+  color: #fff;
+  position: relative;
+  font-family: "Poppins", sans-serif;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+#footer .footer-top p {
+  font-size: 15;
+  font-style: italic;
+  margin: 30px 0 0 0;
+  padding: 0;
+}
+
+#footer .footer-top .footer-newsletter {
+  text-align: center;
+  font-size: 15px;
+  margin-top: 30px;
+}
+
+#footer .footer-top .footer-newsletter form {
+  background: #fff;
+  padding: 6px 10px;
+  position: relative;
+  border-radius: 50px;
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+  text-align: left;
+}
+
+#footer .footer-top .footer-newsletter form input[type="email"] {
+  border: 0;
+  padding: 4px 8px;
+  width: calc(100% - 100px);
+}
+
+#footer .footer-top .footer-newsletter form input[type="submit"] {
+  position: absolute;
+  top: 0;
+  right: -1px;
+  bottom: 0;
+  border: 0;
+  background: none;
+  font-size: 16px;
+  padding: 0 20px;
+  background: #fdc134;
+  color: #fff;
+  transition: 0.3s;
+  border-radius: 50px;
+  box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+}
+
+#footer .footer-top .footer-newsletter form input[type="submit"]:hover {
+  background: #fcb102;
+}
+
+#footer .footer-top .social-links {
+  margin-top: 30px;
+}
+
+#footer .footer-top .social-links a {
+  font-size: 18px;
+  display: inline-block;
+  background: #284864;
+  color: #fff;
+  line-height: 1;
+  padding: 8px 0;
+  margin-right: 4px;
+  border-radius: 50%;
+  text-align: center;
+  width: 36px;
+  height: 36px;
+  transition: 0.3s;
+}
+
+#footer .footer-top .social-links a:hover {
+  background: #fcb102;
+  color: #fff;
+  text-decoration: none;
+}
+
+#footer .footer-bottom {
+  border-top: 1px solid #1a2e40;
+  z-index: 2;
+  position: relative;
+  padding-top: 40px;
+  padding-bottom: 40px;
+}
+
+#footer .copyright {
+  text-align: center;
+  float: left;
+}
+
+#footer .credits {
+  float: right;
+  text-align: center;
+  font-size: 13px;
+}
+
+/* ---Chat box */
+.chat_messages {
+    font-size: 0.80rem;
+    margin-top: 2rem;
+    line-height: 2.2rem;
+    padding-left: 0.6rem;
+}
+.chatmain_content p {
+    font-size: 0.82rem;
+    line-height: 1.4rem;
+    text-align: center;
+}
+.user-message {
+    display: flex;
+    justify-content: end;
+}
+.bot-message {
+    display: flex;
+    justify-content: start;
+}
+.chat-box-section {
+    max-width: 23%;
+    display: none;
+    z-index: 999;
+    position: fixed;
+    bottom: 60px;
+    right: 0.7em;
+}
+@media screen and (max-width: 1255px) {
+  .chat-box-section {
+    max-width: 30%;
+}
+}
+
+@media screen and (max-width: 768px) {
+  .chat-box-section {
+    max-width: 70%;
+}
+}
+@media screen and (max-width: 300px) {
+  .chat-box-section {
+    max-width: 92%;
+}
+}
+.chatbox-button{
+  background: #C6AA58;
+  padding: 0.47em;
+  cursor: pointer;
+  border-radius: 6px;
+}
+.chat-box-icon{
+  position: fixed;
+  bottom: 60px;
+  right: 0.9em;
+  z-index: 998;
+}
+
+.chatbox-button:hover{
+  background: #003e27;
+}
+
+#chat2 {
+  max-height: 63vh;
+}
+#chat2 .card-body {
+  height: 300px;
+  overflow-y: auto;
+}
+#chat2 .form-control {
+  border-color: transparent;
+}
+
+#chat2 .form-control:focus {
+  border-color: transparent;
+  box-shadow: inset 0px 0px 0px 1px transparent;
+}
+
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
+}
+
+@media (max-width: 768px) {
+  #footer .copyright, #footer .credits {
+    padding: 5px;
+    float: none;
+    text-align: ceneter;
+  }
+}
+
+/* Register Trial */
+
+.input-field {
+    max-width: 380px;
+    width: 100%;
+    /* background-color: #f0f0f0; */
+    background-color: #fff;
+    margin: 7px 0;
+    height: 50px;
+    border-radius: 10px;
+    display: grid;
+    grid-template-columns: 15% 85%;
+    padding: 0 0.4rem;
+    position: relative;
+}
+.eye-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+.input-field.textarea {
+    max-width: 380px;
+    width: 100%;
+    /* background-color: #f0f0f0; */
+    background-color: #fff;
+    margin: 10px 0;
+    height: 100px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    padding: 0 0.4rem;
+    position: relative;
+}
+
+.input-field i {
+    text-align: center;
+    line-height: 55px;
+    color: #acacac;
+    transition: 0.5s;
+    font-size: 1rem;
+}
+
+.input-field input{
+    background: none;
+    outline: none;
+    border: none;
+    line-height: 1;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #333;
+}
+.input-field select {
+    height: 50px;
+}
+.input-field textarea {
+    background: none;
+    outline: none;
+    border: none;
+    resize: none;
+    line-height: 1;
+    height: 100%;
+    padding: 1rem 0.5rem;
+    width: 100%;
+    font-weight: 600;
+    font-size: 1rem;
+    color: #333;
+}
+
+#state:focus{
+    box-shadow: none;
+}
+
+.input-field input::placeholder , .input-field textarea::placeholder{
+    color: #aaa;
+    font-weight: 500;
+}
+
+.registerTrialBtn {
+    color: #fff;
+    border-radius: 5px;
+    font-weight: bold;
+    padding: 8px 35px 10px 35px;
+    border: 2px solid #C6AA58;
+    transition: all ease-in-out 0.3s;
+    display: inline-block;
+    background: #003e27;
+}
+
+.registerTrialBtn:hover {
+    background: #C6AA58;
+    color: #003e27;
+}
+</style>
+
+
+
+</head>
+
+<body>
+  <style>
+    body, html {
+      background: #090d00;
+    }
+
+    /* BACKGROUND */
+
+    #bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    #bg canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+
+  <div id="bg">
+    <canvas></canvas>
+    <canvas></canvas>
+    <canvas></canvas>
+  </div>
+
+  <!-- ======= Header ======= -->
+  <header id="header">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <div class="logo">
+        <h1><a href="#">Billing Software</a></h1>
+
+      </div>
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <!-- <li><a class="nav-link scrollto active" href="#hero">Home</a></li> -->
+          <li><a class="nav-link scrollto" href="#about">About</a><span class="hover"></span></li>
+          <li><a class="nav-link scrollto" href="#planAndPricing">Plan & Pricing</a><span class="hover"></span></li>
+          <li><a class="nav-link scrollto" href="#FAQs">FAQs</a><span class="hover"></span></li>
+          <li><a class="nav-link" href="{% url 'goBlog' %}">Blog</a><span class="hover"></span></li>
+          <li><a class="nav-link scrollto" href="#contact">Contact Us</a><span class="hover"></span></li>
+          
+          
+          <li><a class="loginBtn" href="{% url 'login' %}">Login</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <!-- ======= Home carousel Section ======= -->
+
+  <section id="hero">
+      <div
+        id="carouselExampleControls"
+        data-bs-interval="4000"
+        class="carousel slide"
+        data-bs-ride="carousel"
+      >
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img
+              src="{% static 'images/ft5.svg' %}"
+              class="d-block carousel_image1"
+              alt="..."
+              style="width: 31vw; float: right;"
+            />
+            <div class="carousel-caption top-0 mt-4 w-50 caption1">
+                <h6 class="text-start float-start" style="width: fit-content;">BillingSoftware</h6>
+                <h4 class="text-start d-flex" style="width: 115%; font-weight: bold;">Your Ultimate Billing Solution</h4>
+                <p class="mt-2" style="text-align: justify;">Unlock the Power of Seamless Business Operations with BillingSoftwareIndia the billing software tailored for small businesses navigating the complexities of Value Added Tax (VAT). Designed with user- friendliness in mind, BillingSoftwareIndia empowers entrepreneurs without an accounting background to effortlessly manage their financial transactions and gain valuable insights into their business performance.</p>
+            </div>
+            <div class="carousel-caption getTrialBtn1 mt-1">
+              <a href="#registerTrial" data-bs-toggle="modal" class="btn-get-trial trialBtn">Get Free Trial</a>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img
+              src="{% static 'images/ft6.svg' %}"
+              class="d-block carousel_image2"
+              alt="..."
+              style="width: 31vw; float: right;"
+            />
+            <div class="carousel-caption w-50 top-0 mt-1 caption1">
+              <h6 class="text-start" style="width: fit-content;">BillingSoftware</h6>
+              <h4 class="d-flex" style="text-align: start; width: 115%; font-weight: bold">Streamline Your Finances with Seamless Billing Solutions</h4>
+              <p class="mt-2" style="text-align: justify;">Simplify financial management with our comprehensive billing software. This solution offers seamless invoicing, precise expense tracking, and efficient payment processing, empowering your business with a robust and user-friendly platform. Navigate effortlessly through billing complexities, ensuring accuracy and timely transactions. Experience the ease of monitoring and controlling your finances in one central hub, making it an indispensable tool for optimizing your financial processes and fostering business growth.</p>
+            </div>
+            <div class="carousel-caption getTrialBtn1 mt-1">
+              <a href="#registerTrial" data-bs-toggle="modal" class="btn-get-trial trialBtn">Get Free Trial</a>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img
+              src="{% static 'images/ft7.svg' %}"
+              class="d-block carousel_image1"
+              alt="..."
+              style="width: 31vw; float: right;"
+            />
+            <div class="carousel-caption top-0 mt-1 w-50 caption1">
+              <h6 class="text-start float-start" style="width: fit-content;">BillingSoftware</h6>
+              <h4 class="d-flex" style="text-align: start; width: 120%; font-weight: bold">Effortless Invoicing and Payments for Your Business Success</h4>
+              <p class="mt-2" style="text-align: justify;">Revolutionize your billing process effortlessly with our software. Enjoy a smooth and error-free invoicing experience, complemented by seamless payment handling. Elevate your business success by reducing complexities and enhancing efficiency in managing invoices and transactions. This intuitive solution ensures quick, secure, and reliable payment processing, freeing up valuable time for you to focus on strategic aspects of your business, confident in the knowledge that your billing operations are streamlined for success.</p>
+            </div>
+            <div class="carousel-caption getTrialBtn1 mt-1">
+              <a href="#registerTrial" data-bs-toggle="modal" class="btn-get-trial trialBtn">Get Free Trial</a>
+            </div>
+          </div>
+        </div>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselExampleControls"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselExampleControls"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+  </section>
+  <!-- End -->
+
+  <main id="main">
+
+    <!-- ======= About Section ======= -->
+    <section id="about" class="about section-bg">
+      <div class="container">
+
+        <div class="section-title">
+          <h2 data-aos="fade-in" style="position: relative; z-index: 1;">About</h2>
+          <!-- <p data-aos="fade-in" style="position: relative; z-index: 1;">Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p> -->
+        </div>
+
+        <div class="row content">
+          <div class="col-md-5 about_image" data-aos="fade-right">
+            <img src="{% static 'images/ft1.svg' %}" class="img-fluid" alt="">
+          </div>
+          <div class="col-md-7 pt-4" data-aos="fade-left">
+            <!-- <h3 style="position: relative; z-index: 1;">Excepteur sint occaecat cupidatat non proident, sunt occaecat.</h3> -->
+            <p class="font-italic" style="position: relative; z-index: 1; text-align: justify">
+              At BillingSoftware, we redefine billing software for small businesses. Our
+              user-friendly platform simplifies financial management, empowering
+              entrepreneurs without accounting backgrounds. With intuitive reporting and
+              visual insights, BillingSoftware streamlines decision-making processes. We
+              prioritize efficiency, allowing for on-the-spot billing and seamless
+              communication with customers. Join us and experience the power of
+              BillingSoftware in driving your business forward.
+            </p>
+            <ul>
+              <li><i class="fa fa-check"></i> User-friendly interface.</li>
+              <li><i class="fa fa-check"></i> Intuitive stock reporting.</li>
+              <li><i class="fa fa-check"></i> Visual data insights.</li>
+              <li><i class="fa fa-check"></i> Efficient on-the-spot billing.</li>
+              <li><i class="fa fa-check"></i> Comprehensive transaction records.</li>
+              <li><i class="fa fa-check"></i> Versatile data export options.</li>
+            </ul>
+          </div>
+        </div>
+
+
+        <div class="row content">
+          <div class="col-md-5 order-1 order-md-2 about_image" data-aos="fade-left">
+            <img src="{% static 'images/ft2.svg' %}"class="img-fluid" alt="">
+          </div>
+          <div class="col-md-7 pt-5 order-2 order-md-1" data-aos="fade-right">
+            <h3 style="position: relative; z-index: 1;">Why BillingSoftware</h3>
+            <p class="font-italic" style="z-index: 1; text-align: justify">
+              BillingSoftware is more than just billing software; it's a
+              comprehensive solution crafted to enhance the efficiency and
+              growth of your small business. From simplified stock reporting to
+              intuitive data visualization and versatile export options, BillingSoftware empowers you to take control of your financial landscape.
+              Join countless businesses that have embraced the power of
+              BillingSoftware. Experience simplicity, precision, and efficiency in
+              billing like never before.
+            </p>
+            <p style="position: relative; z-index: 1;">
+              Take the first step towards seamless business operations. Try BillingSoftwareIndia today!
+            </p>
+          </div>
+        </div>
+
+        <div class="row demo-video py-5">
+          <div class="col-12 d-flex justify-content-center">
+            <iframe style="width: 75vw; height: 70vh; position: relative; z-index: 1;" src="https://www.youtube.com/embed/CcjZ2x72iF0?si=WrJTLSJ7EThuf5kA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+        </div>
+
+        <div class="row content">
+          <div class="col-md-5 about_image" data-aos="fade-right">
+            <img src="{% static 'images/ft3.svg' %}" class="img-fluid" alt="">
+          </div>
+          <div class="col-md-7 pt-5" data-aos="fade-left">
+            <h3> Unlock Business Insights Instantly </h3>
+            <p style="text-align: justify">
+              Transform your decision-making process with our
+              revolutionary software. Gain immediate access to intuitive
+              visual data insights, providing clarity and actionable
+              information for strategic choices. Experience a swift and
+              dynamic approach to managing your financial operations with
+              our innovative platform.
+            </p>
+            <ul>
+              <li><i class="fa fa-check"></i> Immediate Access to Insights.</li>
+              <li><i class="fa fa-check"></i> Clarity for Strategic Decisions.</li>
+              <li><i class="fa fa-check"></i> Dynamic Financial Management.</li>
+              <li><i class="fa fa-check"></i> Streamlined Decision-Making.</li>
+              <li><i class="fa fa-check"></i> Innovative Financial Management.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row content">
+          <div class="col-md-5 order-1 order-md-2 about_image" data-aos="fade-left">
+            <img src="{% static 'images/ft4.svg' %}" class="img-fluid" alt="">
+          </div>
+          <div class="col-md-7 pt-5 order-2 order-md-1" data-aos="fade-right">
+            <h3> Transform Transactions with Speed </h3>
+            <p class="font-italic" style="text-align: justify">
+              Revolutionize your customer service and operational
+              efficiency. Our on-the-spot billing feature is a game-changer,
+              allowing you to streamline transactions with unparalleled
+              speed. Instantly generate slips or bills, providing a seamless
+              experience for both you and your customers. Accelerate your
+              business transactions, ensuring precision and efficiency in
+              every interaction.
+            </p>
+            <p>
+              Experience a swift and dynamic approach to managing your financial operations with our innovative software.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <!-- End Services Section -->
+
+    <!-- ======= Plan & Pricing Section ======= -->
+    <section id="planAndPricing" class="planandpricing section-bg">
+      <div class="container">
+
+        <div class="section-title">
+          <h2 data-aos="fade-in">Plan & Pricing</h2>
+          <p data-aos="fade-in">Explore our flexible pricing option. Find the perfect plan for you.</p>
+        </div>
+
+        <div class="row mt-5 pt-4">
+          <div class="col-lg-4">
+              <div class="pricing-box mt-4">
+                  <i class="mdi mdi-account h1"></i>
+                  <h4 class="f-20 text-uppercase fw-bold">Silver</h4>
+
+                  <div class="mt-4 pt-2">
+                      <p class="mb-2 f-18">Features</p>
+                      <!-- <p class="mb-2"><i class="bx bxs-check-circle text-success f-18 me-2"></i><b>Lorem Ipsum</b>Lorem Ipsum is simply dummy text</p> -->
+                      <p class="mb-2"><i class="bx bxs-check-circle text-success f-18 me-2"></i><b>Lorem Ipsum</b>Lorem Ipsum is simply dummy text</p>
+                      <p class="mb-2"><i class="bx bxs-x-circle text-danger f-18 me-2"></i><b>Lorem Ipsum</b>Lorem Ipsum is simply dummy text</p>
+                      <p class="mb-2"><i class="bx bxs-x-circle text-danger f-18 me-2"></i><b>Lorem Ipsum</b>Lorem Ipsum is simply dummy text</p>
+                  </div>
+
+                  <!-- <p class="mt-4 pt-2 text-muted">Semper urna veal tempus pharetra elit habisse platea dictumst.
+                  </p> -->
+                  <div class="pricing-plan mt-4 pt-2">
+                      <h4 class="text-muted"><s> &#x20B9;499.99</s> <span class="plan pl-3 text-dark">&#x20B9;999.99 </span></h4>
+                      <p class="text-muted mb-0">Per Month</p>
+                  </div>
+
+
+                  <div class="mt-4 pt-3 d-flex justify-content-center">
+                      <a href="" class="btn purchaseBtn">Purchase Now</a>
+                  </div>
+              </div>
+          </div>
+
+          <div class="col-lg-4">
+              <div class="pricing-box mt-4">
+                  <div class="pricing-badge">
+                      <span class="badge">Featured</span>
+                  </div>
+
+                  <i class="mdi mdi-account-multiple h1 text-primary"></i>
+                  <h4 class="f-20 text-primary text-uppercase fw-bold">Gold</h4>
+
+
+                  <div class="mt-4 pt-2">
+                      <p class="mb-2">Features</p>
+                      <!-- <p class="mb-2"><i class="bx bxs-check-circle text-success me-2"></i><b>Lorem Ipsum</b>Lorem Ipsum is simply dummy text</p> -->
+                      <p class="mb-2"><i class="bx bxs-check-circle text-success me-2"></i><b>Lorem Ipsum</b>Lorem Ipsum is simply dummy text</p>
+                      <p class="mb-2"><i class="bx bxs-check-circle text-success me-2"></i><b>Lorem Ipsum</b>Lorem Ipsum is simply dummy text</p>
+                      <p class="mb-2"><i class="bx bxs-x-circle text-danger me-2"></i><b>Lorem Ipsum</b>Lorem Ipsum is simply dummy text</p>
+                  </div>
+
+                  <!-- <p class="mt-4 pt-2 text-muted">Semper urna veal tempus pharetra elit habisse platea dictumst.
+                  </p> -->
+
+                  <div class="pricing-plan mt-4 pt-2">
+                      <h4 class="text-muted"><s> &#x20B9;1549.99</s> <span class="plan pl-3 text-dark">&#x20B9;1199.99 </span></h4>
+                      <p class="text-muted mb-0">Per Month</p>
+                  </div>
+
+                  <div class="mt-4 pt-3 d-flex justify-content-center">
+                      <a href="" class="btn purchaseBtn">Purchase Now</a>
+                  </div>
+              </div>
+          </div>
+
+          <div class="col-lg-4">
+              <div class="pricing-box mt-4">
+                  <i class="mdi mdi-account-multiple-plus h1"></i>
+                  <h4 class="f-20 text-uppercase fw-bold">Diamond</h4>
+
+                  <div class="mt-4 pt-2">
+                      <p class="mb-2 f-18">Features</p>                      
+                      <!-- <p class="mb-2"><i class="bx bxs-check-circle text-success f-18 me-2"></i><b>Lorem Ipsum</b>Lorem Ipsum is simply</p> -->
+                      <p class="mb-2"><i class="bx bxs-check-circle text-success f-18 me-2"></i><b>Lorem Ipsum</b>Lorem Ipsum is simply dummy text</p>
+                      <p class="mb-2"><i class="bx bxs-check-circle text-success f-18 me-2"></i><b>Lorem Ipsum</b>Lorem Ipsum is simply dummy text</p>
+                      <p class="mb-2"><i class="bx bxs-check-circle text-success f-18 me-2"></i><b>Lorem Ipsum</b>Lorem Ipsum is simply dummy text</p>
+                  </div>
+
+                  <!-- <p class="mt-4 pt-2 text-muted">Semper urna veal tempus pharetra elit habisse platea dictumst.
+                  </p> -->
+
+                  <div class="pricing-plan mt-4 pt-2">
+                      <h4 class="text-muted"><s> &#x20B9;2499.99</s> <span class="plan pl-3 text-dark">&#x20B9;1999.99 </span></h4>
+                      <p class="text-muted mb-0">Per Month</p>
+                  </div>
+
+                  <div class="mt-4 pt-3 d-flex justify-content-center">
+                      <a href="" class="btn purchaseBtn">Purchase Now</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+
+      </div>
+    </section>
+    <!-- End Plan & Pricing Section -->
+
+    <!-- ======= FAQs Section ======= -->
+    <section id="FAQs" class="faqs section-bg">
+
+      <div class="our-faq-wrapper">
+        <div class="container">
+          <div class="section-title">
+            <h2 data-aos="fade-in">FAQ<sub>s</sub></h2>
+            <p data-aos="fade-in">Magnam dolores commodi suscipit. Necessitatibus eius consequatur ex aliquid fuga eum quidem. Sit sint consectetur velit. Quisquam quos quisquam cupiditate. Et nemo qui impedit suscipit alias ea. Quia fugiat sit in iste officiis commodi quidem hic quas.</p>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="accordion" id="accordion">
+                <div class="card">
+                  <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> Can users with no accounting background use the software? </button>
+                    </h5>
+                  </div>
+                  <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-bs-parent="#accordion">
+                    <div class="card-body"> Yes, our user-friendly interface ensures easy navigation for individuals without accounting expertise. </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo"> How quickly can I generate slips or bills with the on-the-spot billing feature? </button>
+                    </h5>
+                  </div>
+                  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-bs-parent="#accordion">
+                    <div class="card-body"> Instantly! Our software allows for immediate generation, streamlining transactions for efficiency. </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="headingThree">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree"> Can I export data to Excel for versatility in data management? </button>
+                    </h5>
+                  </div>
+                  <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-bs-parent="#accordion">
+                    <div class="card-body"> Absolutely, every module can be exported seamlessly to Excel for flexible data handling. </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="accordion" id="accordion2">
+                <div class="card">
+                  <div class="card-header" id="heading4">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4" aria-expanded="false" aria-controls="collapse4"> What types of insights do the visual data representations provide? </button>
+                    </h5>
+                  </div>
+                  <div id="collapse4" class="collapse" aria-labelledby="heading4" data-bs-parent="#accordion2">
+                    <div class="card-body"> The graphical representations offer clear insights into sales trends for informed decision-making. </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="heading5">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5" aria-expanded="false" aria-controls="collapse5"> Is the software suitable for businesses dealing with VAT ? </button>
+                    </h5>
+                  </div>
+                  <div id="collapse5" class="collapse" aria-labelledby="heading5" data-bs-parent="#accordion2">
+                    <div class="card-body"> Certainly, our software is tailored for small businesses navigating Value Added Tax complexities. </div>
+                  </div>
+                </div>
+                <div class="card">
+                  <div class="card-header" id="heading6">
+                    <h5 class="mb-0">
+                      <button class="btn btn-link collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6" aria-expanded="false" aria-controls="collapse6"> How can I share sales bills with multiple users ? </button>
+                    </h5>
+                  </div>
+                  <div id="collapse6" class="collapse show" aria-labelledby="heading6" data-bs-parent="#accordion2">
+                    <div class="card-body"> Easily share sales bills in PDF format directly via email, ensuring efficient communication with stakeholders. </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End FAQs Section -->
+
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact section-bg">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>Contact Us</h2>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-6 mt-4 mt-lg-0">
+            <div class="mapouter">
+              <div class="gmap_canvas">
+                <iframe class="gmap_iframe h-100" width="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3929.0739866451886!2d76.35812367376452!3d10.01074747285229!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b080d9bfaa6db61%3A0xa5df6acfc2d1e5fd!2sALTOS%20Technologies!5e0!3m2!1sen!2sin!4v1707387050232!5m2!1sen!2sin"></iframe>
+                <!-- <a href="https://www.embedmymap.com/">Embed My Map</a> -->
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-6">
+
+            <div class="row pt-3">
+              <div class="col-md-12">
+                <div class="info-box" data-aos="fade-up">
+                  <i class="bx bx-map"></i>
+                  <h3>Our Address</h3>
+                  <p>1st Floor - Thapasya Building Infopark, Kakkanad, Cochin</p>
+                  <!-- <p>First floor,D Block Tidel park,Tharamani, Chennai, Tamilnadu 600113</p> -->
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info-box mt-4" data-aos="fade-up" data-aos-delay="100">
+                  <i class="bx bx-envelope"></i>
+                  <h3>Email Us</h3>
+                  <p>Info@ altostechnologies.com</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info-box mt-4" data-aos="fade-up" data-aos-delay="100">
+                  <i class="bx bx-phone-call"></i>
+                  <h3>Call Us</h3>
+                  <p>+91 90741 56818</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+    <!-- End Contact Section -->
+
+  </main>
+  <!-- End #main -->
+
+  <!-- Chat box UI-->
+  <!-- floating button -->
+  <div id="chat-box-icon" class="chat-box-icon" style="display: block;"  onclick="openChatBox()">
+    <div class="chatbox-button">
+      <span>
+        <img class="rounded" src="{% static 'images/chatbot.png' %}" alt="chat" style="max-width: 1.65em;">
+      </span>
+    </div>
+  </div>
+  <!-- button end -->
+  <div class="chat-box-section" id="chat-box">
+    <div class="card" id="chat2">
+      <div class="card-header d-flex justify-content-between align-items-center px-2">
+        <h6 class="mb-0">BillingSoftware</h6>
+        <span id="chat-box-close" onclick="closeChatBox()" style="cursor: pointer; font-size: 2em;"><i class="bx bx-x"></i></span>
+      </div>
+      <div class="card-body" data-mdb-perfect-scrollbar="true" id="chat-message-box">
+          <div class="chatmain_content">
+            <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+        <div  class="chat_messages" id="chat-messages"></div>
+      </div>
+      <div class="card-footer text-muted d-flex justify-content-start align-items-center p-3">
+        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3-bg.webp"
+          alt="avatar 3" style="width: 40px; height: 100%;">
+        <input type="text" class="form-control" id="chatbox-input"
+          placeholder="Type message">
+        <a class="ms-1 text-muted" href="#!"><i class="fa fa-paperclip"></i></a>
+        <a class="ms-3 text-muted" id="emoji-button" href="#!"><i class="fa fa-smile"></i></a>
+        <a class="ms-3 text-primary" href="#!" id="send-btn" role="button"><i class="fa fa-paper-plane"></i></a>
+      </div>
+    </div>
+
+  </div>
+  <!-- Chat box End -->
+
+  <!-- ======= Footer ======= -->
+  <footer id="footer">
+    <div class="container footer-bottom clearfix">
+      <div class="col">
+        <center>
+          {% now 'Y' %} &copy; Copyright <strong><span>BillingSoftware</span></strong>. All Rights Reserved
+        </center>
+      </div>
+    </div>
+  </footer>
+  <!-- End Footer -->
+   <!-- <footer id="footer">
+       <div class="container">
+           <div class="container text-center text-md-left ">
+               <div class="row mt">
+                    <div class="col-md-12 col-lg-12 col-xl-12 mx-auto mb-4" style="margin-top:6%;">
+                        <h1  style="font-size: 150%;color: white;">Contact information</h1>
+                        <p style="color:white;">
+                        Indian Address:<br>
+                        Blue Mount Tower<br>
+                        1<sup>st</sup> floor
+                        Kakkanad Kochi<br>
+                        
+                        Kerala<br>
+                        Pin :6820481<br>
+                        phone: +91 9171181277
+                  
+                        </p>
+  
+                    </div>
+                </div>
+            </div>
+  </footer> -->
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <a href="#registerTrial" data-bs-toggle="modal" class="get-trial-button d-flex align-items-center justify-content-center"><i class="bx bxs-hand-right mr-1"></i>Get Trial</a>
+  <!-- Trial Register Modal -->
+  <div class="modal fade" id="registerTrial" tabindex="-1" data-bs-backdrop="static" aria-labelledby="registerTrialLabel" aria-hidden="true" style="z-index: 100000;">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content" style="background: #ddddbe;">
+        <div class="modal-header" style="border-bottom: 1px solid #C6AA58;">
+          <h5 class="modal-title" id="registerTrialLabel" style="color: #003e27; font-weight: bold;">Register for Trial</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="color: #C6AA58;" onclick="deactivateForm()"></button>
+        </div>
+        <form action="{% url 'registerTrialUser' %}" method="post" class="" id="register-form" onsubmit="return validate()">
+          {% csrf_token %}
+          <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" placeholder="Username" name="username" id="user" required/>
+                    </div>
+                    <span class="text-danger" style="font-size: 0.85rem; width: max-content; display: none;" id="userErr">User Name already exists..!</span>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-field">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" placeholder="Email" name="email" pattern="[^@\s]+@[^@\s]+\.[^@\s]+" id="email" required/>
+                    </div>
+                    <span class="text-danger" style="font-size: 0.85rem; width: max-content; display: none;" id="emailErr">Email already exists..!</span>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-field">
+                        <i class="fas fa-phone"></i>
+                        <input type="tel" placeholder="Phone Number" name="phone" id="phone" title="Ex: 9048986656" required/>
+                    </div>
+                    <span class="text-danger" style="font-size: 0.85rem; width: max-content; display: none;" id="phoneErr">Phone Number already exists..!</span>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-field">
+                        <i class="fa fa-building"></i>
+                        <input type="text" placeholder="Company Name" name="company" id="company" required/>
+                    </div>
+                    <span class="text-danger" style="font-size: 0.85rem; width: max-content; display: none;" id="cmpErr">Company Name already exists..!</span>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-field">
+                        <i class="fa fa-pencil"></i>
+                        <input type="text" placeholder="GST Number(optional)" name="gstnum" id="gstin" title="Ex: 22AAAAA0000A1Z5"/>
+                        <div class="text-danger" style="font-size: 0.85rem; width: max-content;font-weight: 600;" id="gstErr"></div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-field">
+                        <i class="fa fa-address-card"></i>
+                        <input type="text" name="address" placeholder="Address" id="address" cols="" rows="3" required/>
+                        <!-- <textarea name="address" placeholder="Address" id="address" cols="" rows="3" required></textarea> -->
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-field">
+                        <i class="fa fa-globe"></i>
+                        <input type="text" placeholder="Country" name="country" id="couuntry" required/>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-field">
+                        <i class="fa fa-map-signs"></i>
+                        <input type="text" placeholder="State" name="state" id="state" required/>
+                        <!-- <select class="form-control" id="state" name="state" style="border: none;" required>
+                            <option value="" selected>Choose State..</option>
+                            <option value="Andaman and Nicobar Islads">Andaman and Nicobar Islads</option>
+                            <option value="Andhra Predhesh">Andhra Predhesh</option>
+                            <option value="Arunachal Predesh">Arunachal Predesh</option>
+                            <option value="Assam">Assam</option>
+                            <option value="Bihar">Bihar</option>
+                            <option value="Chandigarh">Chandigarh</option>
+                            <option value="Chhattisgarh">Chhattisgarh</option>
+                            <option value="Dadra and Nagar Haveli">Dadra and Nagar Haveli</option>
+                            <option value="Daman and Diu">Daman and Diu</option>
+                            <option value="Delhi">Delhi</option>
+                            <option value="Goa">Goa</option>
+                            <option value="Gujarat">Gujarat</option>
+                            <option value="Haryana">Haryana</option>
+                            <option value="Himachal Predesh">Himachal Predesh</option>
+                            <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                            <option value="Jharkhand">Jharkhand</option>
+                            <option value="Karnataka">Karnataka</option>
+                            <option value="Kerala">Kerala</option>
+                            <option value="Ladakh">Ladakh</option>
+                            <option value="Lakshadweep">Lakshadweep</option>
+                            <option value="Madhya Predesh">Madhya Predesh</option>
+                            <option value="Maharashtra">Maharashtra</option>
+                            <option value="Manipur">Manipur</option>
+                            <option value="Meghalaya">Meghalaya</option>
+                            <option value="Mizoram">Mizoram</option>
+                            <option value="Nagaland">Nagaland</option>
+                            <option value="Odisha">Odisha</option>
+                            <option value="Puducherry">Puducherry</option>
+                            <option value="Punjab">Punjab</option>
+                            <option value="Rajasthan">Rajasthan</option>
+                            <option value="Sikkim">Sikkim</option>
+                            <option value="Tamil Nadu">Tamil Nadu</option>
+                            <option value="Telangana">Telangana</option>
+                            <option value="Tripura">Tripura</option>
+                            <option value="Uttar Predesh">Uttar Predesh</option>
+                            <option value="Uttarakhand">Uttarakhand</option>
+                            <option value="West Bengal">West Bengal</option>
+                            <option value="Other Territory">Other Territory</option>
+                        </select> -->
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="input-field password-container">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" title="Must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"  name="password" id="pwd"/>
+                        <i class="fa fa-eye eye-icon" onclick="togglePasswordVisibility1()"></i>
+                        <div class="text-danger" style="font-size: 0.85rem; width: max-content;" id="passErr"></div>
+                    </div>
+                    <!-- <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="" id="showPassword">
+                        <label class="form-check-label" for="showPassword">Show Password</label>
+                    </div> -->
+                </div>
+                <div class="col-md-6">
+                    <div class="input-field">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" placeholder="Confirm Password" name="confirmPassword" id="cnfpwd" required/>
+                        <!-- <i class="fa fa-eye eye-icon" onclick="togglePasswordVisibility2()"></i> -->
+                        <div class="text-danger" style="font-size: 0.85rem; width: max-content;" id="cnfrmPassErr"></div>
+                    </div>
+                </div>
+            </div>
+            
+          </div>
+          <div class="modal-footer d-flex justify-content-center" style="border-top: 1px solid #C6AA58;">
+            <button type="submit" id="registerBtn" class="registerTrialBtn w-50 text-uppercase">REGISTER</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Vendor JS Files -->
+  <script src="{% static 'assets/vendor/aos/aos.js' %}"></script>
+  <script src="{% static 'assets/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/glightbox/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/isotope-layout/isotope.pkgd.min.js' %}"></script>
+  <script src="{% static 'assets/vendor/php-email-form/validate.js' %}"></script>
+  <script src="{% static 'assets/vendor/swiper/swiper-bundle.min.js' %}"></script>
+
+  <!-- Template chat JS File -->
+  <script src="{% static 'assets/js/chat.js' %}"></script>
+
+
+  <script>
+    $( "li" ).hover(
+      function() {
+          $(this).find("span").stop().animate({
+          width:"100%",
+          opacity:"1",
+        }, 400, function () {
+        })
+      }, function() {
+          $(this).find("span").stop().animate({
+          width:"0%",
+          opacity:"0",
+        }, 400, function () {
+        })
+      }
+    );
+
+    function togglePasswordVisibility1(){
+      if($('#pwd').attr('type') == 'text'){
+        $('#pwd').attr('type','password')
+      }else{
+        $('#pwd').attr('type','text')
+      }
+    }
+
+    function togglePasswordVisibility2(){
+      if($('#cnfpwd').attr('type') == 'text'){
+        $('#cnfpwd').attr('type','password')
+      }else{
+        $('#cnfpwd').attr('type','text')
+      }
+    }
+
+    $(document).ready(function() {
+      setTimeout(function() {
+        if(! $('#registerTrial').hasClass('show')){
+            $('#registerTrial').modal('toggle');
+            if(!$('#register-form').hasClass('form_active')){
+                $('#register-form').addClass('form_active');
+            }
+        }
+      }, 18000);
+    });
+
+    function validate() {
+        var pwd = document.getElementById("pwd").value;
+        var cnfpwd = document.getElementById("cnfpwd").value;
+        var usnm = document.getElementById("user").value;
+        var gstin = document.getElementById('gstin').value;
+        const gstregex = /\d{2}[A-Z]{5}\d{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}/;
+        const mobPattern = /^\d{10}$/;
+        const gstinPattern = /^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[A-Z\d]{1}[Z]{1}[A-Z\d]{1}$/;
+
+        var phone = $('#phone').val();
+        var gstinput = $('#gstin').val();
+        
+        if(! mobPattern.test(phone)){
+            alert('Invalid.! Mobile Number should have 10 digits..')
+            return false;
+        }
+
+        if(gstin != ""){
+            if(! gstinPattern.test(gstinput)){
+                alert('Invalid GST Number..\n Ex: 22AAAAA0000A1Z5')
+                return false;
+            }
+        }
+
+        // if (gstin !="" && !gstregex.test(gstin)){
+        //     document.getElementById('gstErr').innerHTML = "Invalid..! Ex: '22AAAAA0000A1Z5'"
+        //     return false;
+        // }else{
+        //     document.getElementById('gstErr').innerHTML = ""
+        // }
+
+        if (pwd.length < 8 || pwd.length > 18) {
+            alert("Password length should be 8-18");
+            // document.getElementById('passErr').innerHTML = "Password length should be 8-18"
+            return false;
+        }else{
+            // document.getElementById('passErr').innerHTML = "";
+        }
+        if (pwd != cnfpwd) {
+            alert("password and confirm password does not match.!");
+            // document.getElementById('cnfrmPassErr').innerHTML = "password and confirm password does not match.!"
+            return false;
+        }else{
+            // document.getElementById('cnfrmPassErr').innerHTML = ""
+        }
+        return true;
+    }
+
+$(document).ready(function(){
+  $("#email").blur(function () {
+    var email = $(this).val().trim();
+    // alert(email)
+    if(email !=""){
+      $.ajax({
+        method:'GET',
+        url: "{% url 'validateEmail' %}",
+        data: {
+          'email': email
+        },
+        dataType: 'json',
+        success: function (data) {
+          if (data.is_taken) {
+            $("#email").val("");
+            $('#emailErr').text('Email "'+ email +'" already exists..').show()
+            $('#registerBtn').prop('disabled', true);
+          }else{
+            $('#emailErr').hide();
+            $('#registerBtn').prop('disabled', false);
+          }
+        }
+      });
+    }else{
+      $('#emailErr').text('Email is required..').show()
+      $('#registerBtn').prop('disabled', true);
+    }
+
+  });
+});
+
+$('.trialBtn').on('click',()=>{
+    $('#register-form').addClass('form_active');
+})
+
+$('.get-trial-button').on('click',()=>{
+    $('#register-form').addClass('form_active');
+})
+
+function deactivateForm(){
+    $('#register-form').removeClass('form_active');
+}
+
+$(document).ready(function(){
+  $("#user").blur(function () {
+    if($('#register-form').hasClass('form_active')){
+      var user = $(this).val().trim();
+      if(user != ""){
+        $.ajax({
+          url: "{% url 'validateUsername' %}",
+          data: {
+          'username': user
+          },
+          dataType: 'json',
+          success: function (data) {
+            if (data.is_taken) {
+              $("#user").val("");
+              $('#userErr').text('User name "'+ user +'" already exists..').show()
+              $('#registerBtn').prop('disabled', true);
+            }else{
+              $('#userErr').hide()
+              $('#registerBtn').prop('disabled', false);
+            }
+          }
+        });
+      }else{
+        $('#userErr').text('User name is required..').show()
+        $('#registerBtn').prop('disabled', true);
+      } 
+    }
+  });
+});
+
+  $(document).ready(function(){
+    $("#phone").blur(function () {
+        var phone = $(this).val().trim();
+        if(phone != ""){
+          $.ajax({
+            method:'GET',
+            url: "{% url 'validatePhone' %}",
+            data: {
+                'phone': phone
+            },
+            dataType: 'json',
+            success: function (data) {
+              if (data.is_taken) {
+                $("#phone").val("");
+                $('#phoneErr').text('"'+ phone +'" already exists..').show()
+                $('#registerBtn').prop('disabled', true);
+              }else{
+                $('#phoneErr').hide()
+                $('#registerBtn').prop('disabled', false);
+              }
+            }
+          });
+        }else{
+          $('#phoneErr').text('Phone No. is required..').show()
+          $('#registerBtn').prop('disabled', true);
+        }
+    });
+});
+
+$(document).ready(function(){
+    $("#company").blur(function () {
+        var company = $(this).val().trim();
+        if(company != ""){
+          $.ajax({
+            method:'GET',
+            url: "{% url 'validateCompany' %}",
+            data: {
+                'company': company
+            },
+            dataType: 'json',
+            success: function (data) {
+              if (data.is_taken) {
+                $("#company").val("");
+                $('#cmpErr').text('Company "'+ company +'" already exists..').show()
+                $('#registerBtn').prop('disabled', true);
+              }else{
+                $('#cmpErr').hide()
+                $('#registerBtn').prop('disabled', false);
+              }
+            }
+          });
+        }else{
+          $('#cmpErr').text('Company Name is required..').show()
+          $('#registerBtn').prop('disabled', true);
+        }
+    });
+});
+
+(function() {
+  "use strict";
+
+  /**
+   * Easy selector helper function
+   */
+  const select = (el, all = false) => {
+    el = el.trim()
+    if (all) {
+      return [...document.querySelectorAll(el)]
+    } else {
+      return document.querySelector(el)
+    }
+  }
+
+  /**
+   * Easy event listener function
+   */
+  const on = (type, el, listener, all = false) => {
+    let selectEl = select(el, all)
+    if (selectEl) {
+      if (all) {
+        selectEl.forEach(e => e.addEventListener(type, listener))
+      } else {
+        selectEl.addEventListener(type, listener)
+      }
+    }
+  }
+
+  /**
+   * Easy on scroll event listener 
+   */
+  const onscroll = (el, listener) => {
+    el.addEventListener('scroll', listener)
+  }
+
+  /**
+   * Navbar links active state on scroll
+   */
+  let navbarlinks = select('#navbar .scrollto', true)
+  const navbarlinksActive = () => {
+    let position = window.scrollY + 200
+    navbarlinks.forEach(navbarlink => {
+      if (!navbarlink.hash) return
+      let section = select(navbarlink.hash)
+      if (!section) return
+      if (position >= section.offsetTop && position <= (section.offsetTop + section.offsetHeight)) {
+        navbarlink.classList.add('active')
+      } else {
+        navbarlink.classList.remove('active')
+      }
+    })
+  }
+  window.addEventListener('load', navbarlinksActive)
+  onscroll(document, navbarlinksActive)
+
+  /**
+   * Scrolls to an element with header offset
+   */
+  const scrollto = (el) => {
+    let elementPos = select(el).offsetTop
+    window.scrollTo({
+      top: elementPos,
+      behavior: 'smooth'
+    })
+  }
+
+  /**
+   * Back to top button
+   */
+  let backtotop = select('.back-to-top')
+  if (backtotop) {
+    const toggleBacktotop = () => {
+      if (window.scrollY > 100) {
+        backtotop.classList.add('active')
+      } else {
+        backtotop.classList.remove('active')
+      }
+    }
+    window.addEventListener('load', toggleBacktotop)
+    onscroll(document, toggleBacktotop)
+  }
+
+  let demoButton = select('.get-trial-button')
+  if (demoButton) {
+    const toggleTrialBtn = () => {
+      if (window.scrollY > 100) {
+        demoButton.classList.add('active')
+      } else {
+        demoButton.classList.remove('active')
+      }
+    }
+    window.addEventListener('load', toggleTrialBtn)
+    onscroll(document, toggleTrialBtn)
+  }
+
+  /**
+   * Mobile nav toggle
+   */
+  on('click', '.mobile-nav-toggle', function(e) {
+    select('#navbar').classList.toggle('navbar-mobile')
+    this.classList.toggle('bi-list')
+    this.classList.toggle('bi-x')
+  })
+
+  /**
+   * Mobile nav dropdowns activate
+   */
+  on('click', '.navbar .dropdown > a', function(e) {
+    if (select('#navbar').classList.contains('navbar-mobile')) {
+      e.preventDefault()
+      this.nextElementSibling.classList.toggle('dropdown-active')
+    }
+  }, true)
+
+  /**
+   * Scrool with ofset on links with a class name .scrollto
+   */
+  on('click', '.scrollto', function(e) {
+    if (select(this.hash)) {
+      e.preventDefault()
+
+      let navbar = select('#navbar')
+      if (navbar.classList.contains('navbar-mobile')) {
+        navbar.classList.remove('navbar-mobile')
+        let navbarToggle = select('.mobile-nav-toggle')
+        navbarToggle.classList.toggle('bi-list')
+        navbarToggle.classList.toggle('bi-x')
+      }
+      scrollto(this.hash)
+    }
+  }, true)
+
+  /**
+   * Scroll with ofset on page load with hash links in the url
+   */
+  window.addEventListener('load', () => {
+    if (window.location.hash) {
+      if (select(window.location.hash)) {
+        scrollto(window.location.hash)
+      }
+    }
+  });
+
+  /**
+   * Porfolio isotope and filter
+   */
+  window.addEventListener('load', () => {
+    let portfolioContainer = select('.portfolio-container');
+    if (portfolioContainer) {
+      let portfolioIsotope = new Isotope(portfolioContainer, {
+        itemSelector: '.portfolio-item',
+        layoutMode: 'fitRows'
+      });
+
+      let portfolioFilters = select('#portfolio-flters li', true);
+
+      on('click', '#portfolio-flters li', function(e) {
+        e.preventDefault();
+        portfolioFilters.forEach(function(el) {
+          el.classList.remove('filter-active');
+        });
+        this.classList.add('filter-active');
+
+        portfolioIsotope.arrange({
+          filter: this.getAttribute('data-filter')
+        });
+        portfolioIsotope.on('arrangeComplete', function() {
+          AOS.refresh()
+        });
+      }, true);
+    }
+
+  });
+
+  /**
+   * Initiate portfolio lightbox 
+   */
+  const portfolioLightbox = GLightbox({
+    selector: '.portfolio-lightbox'
+  });
+
+  /**
+   * Portfolio details slider
+   */
+  new Swiper('.portfolio-details-slider', {
+    speed: 400,
+    autoplay: {
+      delay: 5000,
+      disableOnInteraction: false
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      type: 'bullets',
+      clickable: true
+    }
+  });
+
+  /**
+   * Animation on scroll
+   */
+  window.addEventListener('load', () => {
+    AOS.init({
+      duration: 1000,
+      easing: "ease-in-out",
+      once: true,
+      mirror: false
+    });
+  });
+
+})()
+
+function openChatBox(){
+    document.getElementById('chat-box-icon').style.display = 'none';
+    document.getElementById('chat-box').style.display = 'block';
+}
+function closeChatBox(){
+    // $('#chat-box').hide();
+    document.getElementById('chat-box').style.display = 'none';
+    document.getElementById('chat-box-icon').style.display = 'block';
+}
+const button = document.querySelector('#emoji-button');
+
+const picker = new EmojiButton();
+picker.on('emoji', emoji => {
+    document.querySelector('#chatbox-input').value += emoji;
+});
+button.addEventListener('click', () => {
+picker.togglePicker(button);
+});
+</script>
+
+<script>
+  (function($){
+      var canvas = $('#bg').children('canvas'),
+        background = canvas[0],
+        foreground1 = canvas[1],
+        foreground2 = canvas[2],
+        config = {
+          circle: {
+            amount: 18,
+            layer: 3,
+            color: [207, 192, 97],
+            alpha: 0.3
+          },
+          line: {
+            amount: 12,
+            layer: 3,
+            color: [255, 255, 255],
+            alpha: 0.3
+          },
+          speed: 0.5,
+          angle: 20
+        };
+
+      if (background.getContext){
+        var bctx = background.getContext('2d'),
+          fctx1 = foreground1.getContext('2d'),
+          fctx2 = foreground2.getContext('2d'),
+          M = window.Math, // Cached Math
+          degree = config.angle/360*M.PI*2,
+          circles = [],
+          lines = [],
+          wWidth, wHeight, timer;
+        
+        requestAnimationFrame = window.requestAnimationFrame || 
+          window.mozRequestAnimationFrame ||
+          window.webkitRequestAnimationFrame ||
+          window.msRequestAnimationFrame ||
+          window.oRequestAnimationFrame ||
+          function(callback, element) { setTimeout(callback, 1000 / 60); };
+
+        cancelAnimationFrame = window.cancelAnimationFrame ||
+          window.mozCancelAnimationFrame ||
+          window.webkitCancelAnimationFrame ||
+          window.msCancelAnimationFrame ||
+          window.oCancelAnimationFrame ||
+          clearTimeout;
+
+        var setCanvasHeight = function(){
+          wWidth = $(window).width();
+          wHeight = $(window).height(),
+
+          canvas.each(function(){
+            this.width = wWidth;
+            this.height = wHeight;
+          });
+        };
+
+        var drawCircle = function(x, y, radius, color, alpha){
+          var gradient = fctx1.createRadialGradient(x, y, radius, x, y, 0);
+          gradient.addColorStop(0, 'rgba('+color[0]+','+color[1]+','+color[2]+','+alpha+')');
+          gradient.addColorStop(1, 'rgba('+color[0]+','+color[1]+','+color[2]+','+(alpha-0.1)+')');
+
+          fctx1.beginPath();
+          fctx1.arc(x, y, radius, 0, M.PI*2, true);
+          fctx1.fillStyle = gradient;
+          fctx1.fill();
+        };
+
+        var drawLine = function(x, y, width, color, alpha){
+          var endX = x+M.sin(degree)*width,
+            endY = y-M.cos(degree)*width,
+            gradient = fctx2.createLinearGradient(x, y, endX, endY);
+          gradient.addColorStop(0, 'rgba('+color[0]+','+color[1]+','+color[2]+','+alpha+')');
+          gradient.addColorStop(1, 'rgba('+color[0]+','+color[1]+','+color[2]+','+(alpha-0.1)+')');
+
+          fctx2.beginPath();
+          fctx2.moveTo(x, y);
+          fctx2.lineTo(endX, endY);
+          fctx2.lineWidth = 3;
+          fctx2.lineCap = 'round';
+          fctx2.strokeStyle = gradient;
+          fctx2.stroke();
+        };
+
+        var drawBack = function(){
+          bctx.clearRect(0, 0, wWidth, wHeight);
+
+          var gradient = [];
+          
+          gradient[0] = bctx.createRadialGradient(wWidth*0.3, wHeight*0.1, 0, wWidth*0.3, wHeight*0.1, wWidth*0.9);
+          // gradient[0].addColorStop(0, 'rgb(0, 26, 77)');
+          gradient[0].addColorStop(0, 'transparent');
+          gradient[0].addColorStop(1, 'transparent');
+
+          bctx.translate(wWidth, 0);
+          bctx.scale(-1,1);
+          bctx.beginPath();
+          bctx.fillStyle = gradient[0];
+          bctx.fillRect(0, 0, wWidth, wHeight);
+
+          gradient[1] = bctx.createRadialGradient(wWidth*0.1, wHeight*0.1, 0, wWidth*0.3, wHeight*0.1, wWidth);
+          // gradient[1].addColorStop(0, 'rgb(0, 150, 240)');
+          gradient[1].addColorStop(0, 'transparent');
+          gradient[1].addColorStop(0.8, 'transparent');
+
+          bctx.translate(wWidth, 0);
+          bctx.scale(-1,1);
+          bctx.beginPath();
+          bctx.fillStyle = gradient[1];
+          bctx.fillRect(0, 0, wWidth, wHeight);
+
+          gradient[2] = bctx.createRadialGradient(wWidth*0.1, wHeight*0.5, 0, wWidth*0.1, wHeight*0.5, wWidth*0.5);
+          // gradient[2].addColorStop(0, 'rgb(40, 20, 105)');
+          gradient[2].addColorStop(0, 'transparent');
+          gradient[2].addColorStop(1, 'transparent');
+
+          bctx.beginPath();
+          bctx.fillStyle = gradient[2];
+          bctx.fillRect(0, 0, wWidth, wHeight);
+        };
+
+        var animate = function(){
+          var sin = M.sin(degree),
+            cos = M.cos(degree);
+
+          if (config.circle.amount > 0 && config.circle.layer > 0){
+            fctx1.clearRect(0, 0, wWidth, wHeight);
+            for (var i=0, len = circles.length; i<len; i++){
+              var item = circles[i],
+                x = item.x,
+                y = item.y,
+                radius = item.radius,
+                speed = item.speed;
+
+              if (x > wWidth + radius){
+                x = -radius;
+              } else if (x < -radius){
+                x = wWidth + radius
+              } else {
+                x += sin*speed;
+              }
+
+              if (y > wHeight + radius){
+                y = -radius;
+              } else if (y < -radius){
+                y = wHeight + radius;
+              } else {
+                y -= cos*speed;
+              }
+
+              item.x = x;
+              item.y = y;
+              drawCircle(x, y, radius, item.color, item.alpha);
+            }
+          }
+
+          if (config.line.amount > 0 && config.line.layer > 0){
+            fctx2.clearRect(0, 0, wWidth, wHeight);
+            for (var j=0, len = lines.length; j<len; j++){
+              var item = lines[j],
+                x = item.x,
+                y = item.y,
+                width = item.width,
+                speed = item.speed;
+
+              if (x > wWidth + width * sin){
+                x = -width * sin;
+              } else if (x < -width * sin){
+                x = wWidth + width * sin;
+              } else {
+                x += sin*speed;
+              }
+
+              if (y > wHeight + width * cos){
+                y = -width * cos;
+              } else if (y < -width * cos){
+                y = wHeight + width * cos;
+              } else {
+                y -= cos*speed;
+              }
+              
+              item.x = x;
+              item.y = y;
+              drawLine(x, y, width, item.color, item.alpha);
+            }
+          }
+
+          timer = requestAnimationFrame(animate);
+        };
+
+        var createItem = function(){
+          circles = [];
+          lines = [];
+
+          if (config.circle.amount > 0 && config.circle.layer > 0){
+            for (var i=0; i<config.circle.amount/config.circle.layer; i++){
+              for (var j=0; j<config.circle.layer; j++){
+                circles.push({
+                  x: M.random() * wWidth,
+                  y: M.random() * wHeight,
+                  radius: M.random()*(20+j*5)+(20+j*5),
+                  color: config.circle.color,
+                  alpha: M.random()*0.2+(config.circle.alpha-j*0.1),
+                  speed: config.speed*(1+j*0.5)
+                });
+              }
+            }
+          }
+
+          if (config.line.amount > 0 && config.line.layer > 0){
+            for (var m=0; m<config.line.amount/config.line.layer; m++){
+              for (var n=0; n<config.line.layer; n++){
+                lines.push({
+                  x: M.random() * wWidth,
+                  y: M.random() * wHeight,
+                  width: M.random()*(20+n*5)+(20+n*5),
+                  color: config.line.color,
+                  alpha: M.random()*0.2+(config.line.alpha-n*0.1),
+                  speed: config.speed*(1+n*0.5)
+                });
+              }
+            }
+          }
+
+          cancelAnimationFrame(timer);
+          timer = requestAnimationFrame(animate);
+          drawBack();
+        };
+
+        $(document).ready(function(){
+          setCanvasHeight();
+          createItem();
+        });
+        $(window).resize(function(){
+          setCanvasHeight();
+          createItem();
+        });
+      }
+    })(jQuery);
+</script>
+
+<!-- <script>
+  // ABOUT PAGE ANIMATION 
+  (function(name, factory) {
+      if (typeof window === 'object') {
+        window[name] = factory()
+      }
+    })('Ribbons', function() {
+      var _w = window,
+        _b = document.body,
+        _d = document.documentElement
+    
+      // random helper
+      var random = function() {
+        if (arguments.length === 1) {
+          // only 1 argument
+          if (Array.isArray(arguments[0])) {
+            // extract index from array
+            var index = Math.round(random(0, arguments[0].length - 1))
+            return arguments[0][index]
+          }
+          return random(0, arguments[0]) // assume numeric
+        } else if (arguments.length === 2) {
+          // two arguments range
+          return Math.random() * (arguments[1] - arguments[0]) + arguments[0]
+        } else if (arguments.length === 4) {
+          //
+    
+          var array = [arguments[0], arguments[1], arguments[2], arguments[3]]
+          return array[Math.floor(Math.random() * array.length)]
+          //return console.log(item)
+        }
+        return 0 // default
+      }
+    
+      // screen helper
+      var screenInfo = function(e) {
+        var width = Math.max(
+            0,
+            _w.innerWidth || _d.clientWidth || _b.clientWidth || 0
+          ),
+          height = Math.max(
+            0,
+            _w.innerHeight || _d.clientHeight || _b.clientHeight || 0
+          ),
+          scrollx =
+            Math.max(0, _w.pageXOffset || _d.scrollLeft || _b.scrollLeft || 0) -
+            (_d.clientLeft || 0),
+          scrolly =
+            Math.max(0, _w.pageYOffset || _d.scrollTop || _b.scrollTop || 0) -
+            (_d.clientTop || 0)
+    
+        return {
+          width: width,
+          height: height,
+          ratio: width / height,
+          centerx: width / 2,
+          centery: height / 2,
+          scrollx: scrollx,
+          scrolly: scrolly
+        }
+      }
+    
+      // mouse/input helper
+      var mouseInfo = function(e) {
+        var screen = screenInfo(e),
+          mousex = e ? Math.max(0, e.pageX || e.clientX || 0) : 0,
+          mousey = e ? Math.max(0, e.pageY || e.clientY || 0) : 0
+    
+        return {
+          mousex: mousex,
+          mousey: mousey,
+          centerx: mousex - screen.width / 2,
+          centery: mousey - screen.height / 2
+        }
+      }
+    
+      // point object
+      var Point = function(x, y) {
+        this.x = 0
+        this.y = 0
+        this.set(x, y)
+      }
+      Point.prototype = {
+        constructor: Point,
+    
+        set: function(x, y) {
+          this.x = x || 0
+          this.y = y || 0
+        },
+        copy: function(point) {
+          this.x = point.x || 0
+          this.y = point.y || 0
+          return this
+        },
+        multiply: function(x, y) {
+          this.x *= x || 1
+          this.y *= y || 1
+          return this
+        },
+        divide: function(x, y) {
+          this.x /= x || 1
+          this.y /= y || 1
+          return this
+        },
+        add: function(x, y) {
+          this.x += x || 0
+          this.y += y || 0
+          return this
+        },
+        subtract: function(x, y) {
+          this.x -= x || 0
+          this.y -= y || 0
+          return this
+        },
+        clampX: function(min, max) {
+          this.x = Math.max(min, Math.min(this.x, max))
+          return this
+        },
+        clampY: function(min, max) {
+          this.y = Math.max(min, Math.min(this.y, max))
+          return this
+        },
+        flipX: function() {
+          this.x *= -1
+          return this
+        },
+        flipY: function() {
+          this.y *= -1
+          return this
+        }
+      }
+    
+      // class constructor
+      var Factory = function(options) {
+        this._canvas = null
+        this._context = null
+        this._sto = null
+        this._width = 0
+        this._height = 0
+        this._scroll = 0
+        this._ribbons = []
+        this._options = {
+          // ribbon color HSL saturation amount
+          colorSaturation: '80%',
+          // ribbon color HSL brightness amount
+          colorBrightness: '60%',
+          // ribbon color opacity amount
+          colorAlpha: 0.65,
+          // how fast to cycle through colors in the HSL color space
+          colorCycleSpeed: 6,
+          // where to start from on the Y axis on each side (top|min, middle|center, bottom|max, random)
+          verticalPosition: 'center',
+          // how fast to get to the other side of the screen
+          horizontalSpeed: 150,
+          // how many ribbons to keep on screen at any given time
+          ribbonCount: 5,
+          // add stroke along with ribbon fill colors
+          strokeSize: 0,
+          // move ribbons vertically by a factor on page scroll
+          parallaxAmount: -0.5,
+          // add animation effect to each ribbon section over time
+          animateSections: true
+        }
+        this._onDraw = this._onDraw.bind(this)
+        this._onResize = this._onResize.bind(this)
+        this._onScroll = this._onScroll.bind(this)
+        this.setOptions(options)
+        this.init()
+      }
+    
+      // class prototype
+      Factory.prototype = {
+        constructor: Factory,
+    
+        // Set and merge local options
+        setOptions: function(options) {
+          if (typeof options === 'object') {
+            for (var key in options) {
+              if (options.hasOwnProperty(key)) {
+                this._options[key] = options[key]
+              }
+            }
+          }
+        },
+    
+        // Initialize the ribbons effect
+        init: function() {
+          try {
+            this._canvas = document.createElement('canvas')
+            this._canvas.style['display'] = 'block'
+            this._canvas.style['position'] = 'fixed'
+            this._canvas.style['margin'] = '0'
+            this._canvas.style['padding'] = '0'
+            this._canvas.style['border'] = '0'
+            this._canvas.style['outline'] = '0'
+            this._canvas.style['left'] = '0'
+            this._canvas.style['top'] = '80vh'
+            this._canvas.style['width'] = '100%'
+            this._canvas.style['height'] = '100%'
+            this._canvas.style['z-index'] = '0'
+            this._onResize()
+    
+            this._context = this._canvas.getContext('2d')
+            this._context.clearRect(0, 0, this._width, this._height)
+            this._context.globalAlpha = this._options.colorAlpha
+    
+            window.addEventListener('resize', this._onResize)
+            window.addEventListener('scroll', this._onScroll)
+            document.body.appendChild(this._canvas)
+          } catch (e) {
+            console.warn('Canvas Context Error: ' + e.toString())
+            return
+          }
+          this._onDraw()
+        },
+    
+        // Create a new random ribbon and to the list
+        addRibbon: function() {
+          // movement data
+          var dir = Math.round(random(1, 9)) > 5 ? 'right' : 'left',
+            stop = 1000,
+            hide = 200,
+            min = 0 - hide,
+            max = this._width + hide,
+            movex = 0,
+            movey = 0,
+            startx = dir === 'right' ? min : max,
+            starty = Math.round(random(0, this._height))
+    
+          // asjust starty based on options
+          if (/^(top|min)$/i.test(this._options.verticalPosition)) {
+            starty = 0 + hide
+          } else if (/^(middle|center)$/i.test(this._options.verticalPosition)) {
+            starty = this._height / 2
+          } else if (/^(bottom|max)$/i.test(this._options.verticalPosition)) {
+            starty = this._height - hide
+          }
+    
+          // ribbon sections data
+          var ribbon = [],
+            point1 = new Point(startx, starty),
+            point2 = new Point(startx, starty),
+            point3 = null,
+            color = Math.round(random(35, 35, 40, 40)),
+            delay = 0
+    
+          // buils ribbon sections
+          while (true) {
+            if (stop <= 0) break
+            stop--
+    
+            movex = Math.round(
+              (Math.random() * 1 - 0.2) * this._options.horizontalSpeed
+            )
+            movey = Math.round((Math.random() * 1 - 0.5) * (this._height * 0.25))
+    
+            point3 = new Point()
+            point3.copy(point2)
+    
+            if (dir === 'right') {
+              point3.add(movex, movey)
+              if (point2.x >= max) break
+            } else if (dir === 'left') {
+              point3.subtract(movex, movey)
+              if (point2.x <= min) break
+            }
+            // point3.clampY( 0, this._height );
+            //console.log(Math.round(random(1, 5)))
+            ribbon.push({
+              // single ribbon section
+              point1: new Point(point1.x, point1.y),
+              point2: new Point(point2.x, point2.y),
+              point3: point3,
+              color: color,
+              delay: delay,
+              dir: dir,
+              alpha: 0,
+              phase: 0
+            })
+    
+            point1.copy(point2)
+            point2.copy(point3)
+    
+            delay += 4
+            //color += 1
+            //console.log('colorCycleSpeed', color)
+          }
+          this._ribbons.push(ribbon)
+        },
+    
+        // Draw single section
+        _drawRibbonSection: function(section) {
+          if (section) {
+            if (section.phase >= 1 && section.alpha <= 0) {
+              return true // done
+            }
+            if (section.delay <= 0) {
+              section.phase += 0.02
+              section.alpha = Math.sin(section.phase) * 1
+              section.alpha = section.alpha <= 0 ? 0 : section.alpha
+              section.alpha = section.alpha >= 1 ? 1 : section.alpha
+    
+              if (this._options.animateSections) {
+                var mod = Math.sin(1 + section.phase * Math.PI / 2) * 0.1
+    
+                if (section.dir === 'right') {
+                  section.point1.add(mod, 0)
+                  section.point2.add(mod, 0)
+                  section.point3.add(mod, 0)
+                } else {
+                  section.point1.subtract(mod, 0)
+                  section.point2.subtract(mod, 0)
+                  section.point3.subtract(mod, 0)
+                }
+                section.point1.add(0, mod)
+                section.point2.add(0, mod)
+                section.point3.add(0, mod)
+              }
+            } else {
+              section.delay -= 0.5
+            }
+            //console.log('section.color', section.color)
+            var s = this._options.colorSaturation,
+              l = this._options.colorBrightness,
+              c =
+                'hsla(' +
+                section.color +
+                ', ' +
+                s +
+                ', ' +
+                l +
+                ', ' +
+                section.alpha +
+                ' )'
+    
+            this._context.save()
+    
+            if (this._options.parallaxAmount !== 0) {
+              this._context.translate(
+                0,
+                this._scroll * this._options.parallaxAmount
+              )
+            }
+            this._context.beginPath()
+            this._context.moveTo(section.point1.x, section.point1.y)
+            this._context.lineTo(section.point2.x, section.point2.y)
+            this._context.lineTo(section.point3.x, section.point3.y)
+            this._context.fillStyle = c
+            this._context.fill()
+    
+            if (this._options.strokeSize > 0) {
+              this._context.lineWidth = this._options.strokeSize
+              this._context.strokeStyle = c
+              this._context.lineCap = 'round'
+              this._context.stroke()
+            }
+            this._context.restore()
+          }
+          return false // not done yet
+        },
+    
+        // Draw ribbons
+        _onDraw: function() {
+          // cleanup on ribbons list to rtemoved finished ribbons
+          for (var i = 0, t = this._ribbons.length; i < t; ++i) {
+            if (!this._ribbons[i]) {
+              this._ribbons.splice(i, 1)
+            }
+          }
+    
+          // draw new ribbons
+          this._context.clearRect(0, 0, this._width, this._height)
+    
+          for (
+            var a = 0;
+            a < this._ribbons.length;
+            ++a // single ribbon
+          ) {
+            var ribbon = this._ribbons[a],
+              numSections = ribbon.length,
+              numDone = 0
+    
+            for (
+              var b = 0;
+              b < numSections;
+              ++b // ribbon section
+            ) {
+              if (this._drawRibbonSection(ribbon[b])) {
+                numDone++ // section done
+              }
+            }
+            if (numDone >= numSections) {
+              // ribbon done
+              this._ribbons[a] = null
+            }
+          }
+          // maintain optional number of ribbons on canvas
+          if (this._ribbons.length < this._options.ribbonCount) {
+            this.addRibbon()
+          }
+          requestAnimationFrame(this._onDraw)
+        },
+    
+        // Update container size info
+        _onResize: function(e) {
+          var screen = screenInfo(e)
+          this._width = screen.width
+          this._height = screen.height
+    
+          if (this._canvas) {
+            this._canvas.width = this._width
+            this._canvas.height = this._height
+    
+            if (this._context) {
+              this._context.globalAlpha = this._options.colorAlpha
+            }
+          }
+        },
+    
+        // Update container size info
+        _onScroll: function(e) {
+          var screen = screenInfo(e)
+          this._scroll = screen.scrolly
+        }
+      }
+    
+      // export
+      return Factory
+    })
+    
+    new Ribbons({
+      colorSaturation: '60%',
+      colorBrightness: '50%',
+      colorAlpha: 0.5,
+      colorCycleSpeed: 5,
+      verticalPosition: 'random',
+      horizontalSpeed: 200,
+      ribbonCount: 3,
+      strokeSize: 0,
+      parallaxAmount: -0.2,
+      animateSections: true
+    })
+
+</script> -->
+
+{%if messages%} {%for message in messages%} {%if message.tags == "success"%}
+<script>
+  swal({
+    position: "top-end",
+    icon: "success",
+    title: "{{message}}",
+  });
+</script>
+{%elif message.tags == "warning"%}
+<script>
+  swal({
+    position: "top-end",
+    icon: "warning",
+    title: "{{message}}",
+  });
+</script>
+{%elif message.tags == "error"%}
+<script>
+  swal({
+    position: "top-end",
+    icon: "error",
+    title: "{{message}}",
+  });
+</script>
+{%else%}
+<script>
+  swal({
+    position: "top-end",
+    icon: "info",
+    title: "{{message}}",
+  });
+</script>
+{%endif%} {%endfor%} {%endif%}
+</body>
+
+</html>

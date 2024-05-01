@@ -1,0 +1,83 @@
+{% extends 'admin/admin_index.html' %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+<style>
+    main{
+        background: #fff;
+    }
+    .btn:focus{
+        box-shadow: none;
+    }
+    .reg_clients{
+        background-color: #eae9c4;
+    }
+</style>
+<div class="container-fluid">
+    <div class="Registered_clients py-4">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="reg_clients px-3 py-3">
+                    <h4 class="ms-2">Registered Clients</h4>
+                    <table id="reg_clients_table" width="99%">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Company Name</th>
+                                <th>Email</th>
+                                <th>Contact</th>
+                                <th>GSTIN</th>
+                                <th>Registered Date</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for i in clients %}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{i.company.company_name}}</td>
+                                <td>{{i.company.user.email}}</td>
+                                <td>{{i.company.phone_number}}</td>
+                                <td>{{i.company.gst_number}}</td>
+                                <td>{{i.trial.start_date}}</td>
+                                <td>
+                                    <a class="btn btn-outline-danger btn-sm" href="{% url 'removeUser' i.company.user.id %}" onclick="return confirm('Are you sure you want to remove `{{i.company.company_name}}`.?\nAll data will be erased permanently.!')">REMOVE</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+
+
+
+
+<script>
+    $(document).ready(()=>{
+        var nav_links = $(".nav-item.nav-link");
+        
+        for(var i = 0; i < nav_links.length; i++){
+            $(nav_links[i]).removeClass('active')
+            if($(nav_links[i]).hasClass('nav-reg-clients')){
+                $(nav_links[i]).addClass('active');
+                break;
+            }
+        }
+    });
+
+    let table = new DataTable("#reg_clients_table", {
+        'scrollX': true
+    });
+
+    window.addEventListener('resize', function(){
+        $('#reg_clients_table').width('99%')
+    });
+</script>
+{% endblock %}

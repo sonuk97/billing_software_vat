@@ -1,0 +1,345 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    main{
+        padding: 2rem 1rem;
+    }
+    /* .form-group select{
+        width: -webkit-fill-available;
+    } */
+    .switch {
+    position: relative;
+    display: inline-block;
+    width: 52px;
+    height: 28px;
+    }
+
+    .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+    }
+
+    .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    }
+
+    .slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 2px;
+    bottom: 3px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    }
+
+    .slider {
+    background-color: #2196F3;
+    }
+
+    input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+    border-radius: 32px;
+    }
+
+    .slider.round:before {
+    border-radius: 50%;
+    }
+    .submit_btn, .submitunit_btn {
+        background: #c6aa589e;
+        border: 1px solid white;
+        border-radius: 4px;
+        color: white;
+        font-weight: 600;
+        padding: 0.5rem 1rem;
+    }
+    .submit_btn:hover, .submitunit_btn:hover{
+        background: #C6AA58;
+    }
+    input:read-only{
+        background: #fff !important;
+    }
+</style>
+<div class="page-content">
+    <div class="card radius-15" style="background-color: #ddddbeed;">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-12 col-lg-12 col-xl-12">
+                    <div class="card" style="background-color: #eae9c4;">
+                        <div class="row no-gutters">
+                            <div class="col-md-2"></div>
+                            <div class="col-md-8 mt-4 mb-4">
+                                <center>
+                                    <h4 class="card-title text-dark">ADD ITEM</h4>
+                                </center>
+                            </div>
+                            <div class="col-md-2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 col-lg-12">
+                   <form action="{% url 'createNewItem' %}" method="post" class="needs-validation" id="itemForm" onsubmit="return validateForm()">
+                    {% csrf_token %}
+                        <div class="row mt-3">
+                            <div class="col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label for="item_name">Name</label>
+                                    <input type="text" name="name" id="item_name" class="form-control" autocomplete="off" required />
+                                    <span id="nameErr" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label for="item_hsn">HSN</label>
+                                    <input type="number" name="hsn" id="item_hsn" class="form-control" autocomplete="off" required />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label for="">Unit</label>
+                                    <div class="d-flex">
+                                        <select class="form-control" name="item_unit" id="item_units" required>
+                                                <option selected disabled value="Nil">Choose...</option>
+                                                <option value="BTL-BOTTLES">BTL-BOTTLES</option>
+                                                <option value="BOX-BOX">BOX-BOX</option>
+                                                <option value="NOS-NUMBER">NOS-NUMBER</option>
+                                                {% for a in itemunit %}
+                                                <option value="{{ a.symbol}}-{{ a.name }}" style="text-transform:Uppercase;">{{ a.symbol}}-{{ a.name }}</option>
+                                                {% endfor %}
+                                        </select>
+                                        <a href="#" class="ms-2">
+                                            <button type="button"  data-bs-toggle="modal" data-bs-target="#create_unit" class="btn btn-outline-light"><i class="fa fa-plus text-dark"></i></button>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6">
+                                
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <label for="" class="mb-2">Tax Reference</label>
+                            <div class="col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <div class="d-block">
+                                        <label for="taxable">Tax</label>
+                                        <label class="switch">
+                                            <input type="checkbox" name="tax_ref" id="tax_ref">
+                                            <span class="slider round"></span>
+                                        </label>
+                                        <label for="exempt">Exempted Nill</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <input type="text" name="tax" id="item_tax" readonly class="form-control" value="VAT 5%"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6 col-lg-6">
+                                <label for="">Sale Price</label>
+                                <div class="form-group d-flex">
+                                    <input type="text" class="form-control" value="INR" style="width:60px;">
+                                    <input type="number" name="sale_price" class="form-control" id="salePrice" value="0" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6">
+                                <label for="">Purchase Price</label>
+                                <div class="form-group d-flex">
+                                    <input type="text" class="form-control" value="INR" style="width:60px;">
+                                    <input type="number" name="purchase_price" class="form-control" id="purchasePrice" value="0" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6 col-lg-6">
+                                <div class="form-group">
+                                    <label for="opening_stock">Opening Stock</label>
+                                    <input type="number" name="stock" id="item_stock" class="form-control" value="0" required />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-5 mb-5">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3">
+                                <button class="submit_btn w-100 text-uppercase" type="submit" name="next_item">Save & Next</button>
+                            </div>
+                            <div class="col-md-3">
+                                <button class="submit_btn w-100 text-uppercase" type="submit">Save</button>
+                            </div>
+                            <div class="col-md-3"></div>
+                        </div>
+
+                    </form> 
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
+<!-- Unit Create Modal -->
+<div class="modal fade" id="create_unit" tabindex="-1" aria-labelledby="create_unitLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content" style="background: #ddddbe;">
+        <div class="modal-header" style="border-bottom: 1px solid #ffffff;">
+          <h5 class="modal-title text-dark" id="create_unitLabel">Create New Unit</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="post" class="needs-validation" id="newunitform">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="item_unitsymbol">Unit Symbol</label>
+                <input type="text" class="form-control text-uppercase" name="unit_symbol" id="item_unitsymbol" required>
+            </div>
+            <div class="form-group mt-2">
+                <label for="item_unitname">Unit Name</label>
+                <input type="text" class="form-control text-uppercase" name="unit_name" id="item_unitname" required>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer d-flex justify-content-center" style="border-top: 1px solid #ffffff;">
+          <button type="button" id="save_unit" class="submitunit_btn w-50 text-uppercase">SAVE</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(()=>{
+        var nav_links = $(".nav-item.nav-link");
+        
+        for(var i = 0; i < nav_links.length; i++){
+            $(nav_links[i]).removeClass('active')
+            if($(nav_links[i]).hasClass('nav-items')){
+                $(nav_links[i]).addClass('active');
+                break;
+            }
+        }
+
+        $('#tax_ref').change(function () {
+            $(this).is(":checked") ? $('#item_tax').val('VAT 0%') : $('#item_tax').val('VAT 5%');
+        });
+    })
+
+    $(document).on("click","#save_unit",function(){
+        var unit_symbol = $("#item_unitsymbol").val();
+        var unit_name = $("#item_unitname").val();
+        if (unit_name !="" && unit_symbol != ""){
+            $.ajax({
+            type : 'POST',
+            url:"{% url 'createitemunit' %}",
+            data:{
+                uname : unit_name,
+                usymbol : unit_symbol,
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            
+            success: function(response) {
+                console.log("AJAX Success - Response Data:", response);
+                document.getElementById("newunitform").reset();
+                $('#create_unit').modal('toggle');
+                reloadItemUnit();
+                
+                if(response.message == "success"){
+                    // alert('unit added')
+                }else{
+                    alert('Something went wrong..!')
+                }
+            },         
+        });
+        }
+        else{
+            alert('Invalid')
+        }
+    });
+
+    function reloadItemUnit() { 
+        $.ajax({
+            url: "{% url 'getItemUnits' %}",
+            type: "GET",
+            dataType: "json",
+            data: $(this).serialize(),
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+
+            success: function(data) {
+                console.log("AJAX Success - Dropdown Data:", data);
+
+                var dropdown = $('#item_units');
+                dropdown.empty();
+                dropdown.append(`<option selected disabled value="">Choose...</option>`,
+                    `<option value="BTL-BOTTLES">BTL-BOTTLES</option>`,
+                    `<option value="BOX-BOX">BOX-BOX</option>`,
+                    `<option value="NOS-NUMBER">NOS-NUMBER</option>`);
+                $.each(data, function(key, value) {
+                    console.log('key',key);
+                    console.log('value',value);
+                    for(var i=0; i<value.length; i++){
+                        console.log('itr',i);
+                        dropdown.append($('<option></option>').attr('class', "text-uppercase").text(value[i].symbol+"-"+value[i].name).val(value[i].symbol+"-"+value[i].name))
+                    }
+                    // console.log('Units reloaded..');
+                });
+            },
+            error: function(xhr, status, error) {
+            console.error(xhr.responseText);
+            }
+        });
+    }
+
+    $(document).ready(()=>{
+        $('#item_name').on('input',function(){
+            var name = $(this).val();
+            if (name != ""){
+                $.ajax({
+                    url: "{% url 'checkItemName' %}",
+                    type: "GET",
+                    dataType: "json",
+                    data: {
+                        'itemName' : name,
+                    },
+
+                    success: function(data) {
+                        if(data.isExists){
+                            $('#nameErr').text(data.message);
+                        }
+                        else{
+                            $('#nameErr').text('');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                    console.error(xhr.responseText);
+                    }
+                });
+            }
+        })
+    })
+
+</script>
+{% endblock %}

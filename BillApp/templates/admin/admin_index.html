@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <title>{% block title %}BillingSoftware{% endblock %}</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <!-- <link href="" rel="icon"> -->
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet"> 
+    
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'assets/lib/owlcarousel/assets/owl.carousel.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css' %}" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link rel="stylesheet" href="{% static 'assets/vendor/bootstrap/css/bootstrap.min.css' %}">
+    
+    <!-- Box icon -->
+    <link rel="stylesheet" href="{% static 'assets/vendor/boxicons/css/boxicons.css' %}">
+
+    <!-- Template Stylesheet -->
+    <link href="{% static 'assets/css/base.css' %}" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer" ></script>
+</head>
+
+<body>
+    <div class="container-fluid position-relative d-flex p-0">
+        <!-- Spinner Start -->
+        <div id="spinner" class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+            <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <!-- Spinner End -->
+
+
+        <!-- Sidebar Start -->
+        <div class="sidebar b-primary pe-4 pb-3">
+            <nav class="navbar b-primary navbar-dark">
+                <a href="/go_dashboard" class="navbar-brand mx-4 mb-3">
+                    <!-- <h3 class="text-primary"><i class="fa fa-user-edit me-2"></i>BillingSoftware</h3> -->
+                    <h4 class="text-light"></i>BillingSoftware</h4>
+                </a>
+                <div class="d-flex align-items-center ms-4 mb-4">
+                    <div class="position-relative">
+                        <img class="rounded-circle me-lg-2" src="{% static 'assets/img/nouser.jpg' %}" alt="" style="width: 40px; height: 40px;">
+                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                    </div>
+                    <div class="ms-3">
+                        <h6 class="mb-0 text-light text-uppercase">ADMIN</h6>
+                        <!-- <span class="text-light">Admin</span> -->
+                    </div>
+                </div>
+                <div class="navbar-nav w-100">
+                    <!-- <li onclick="window.location.href='/go_admin_dashboard'" class="nav-item nav-link nav-dashboard"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</li> -->
+                    <li onclick="window.location.href=`{% url 'goRegisteredClients' %}`" class="nav-item nav-link nav-reg-clients"><i class="fas fa-users me-2"></i>Registered Clients</li>
+                    <li onclick="window.location.href=`{% url 'goDemoClients' %}`" class="nav-item nav-link nav-demo-clients"><i class="fas fa-user-clock me-2"></i>Demo Clients</li>
+                    <li onclick="window.location.href=`{% url 'goPurchasedClients' %}`" class="nav-item nav-link nav-purchased-clients"><i class="fas fa-user-check me-2"></i>Purchased Clients</li>
+                    <li onclick="window.location.href=`{% url 'goPaymentTerms' %}`" class="nav-item nav-link nav-payment-terms"><i class="fas fa-cubes me-2"></i>Payment Terms<a href="{% url 'addNewPaymentTerm' %}"><i class="fa-solid fa-plus bg-transparent float-end add-icon"></i></a></li>
+                </div>
+            </nav>
+        </div>
+        <!-- Sidebar End -->
+
+
+        <!-- Content Start -->
+        <div class="content">
+            <!-- Navbar Start -->
+            <nav class="navbar navbar-expand b-primary navbar-dark sticky-top px-4 py-0">
+                <a href="/go_dashboard" class="navbar-brand d-flex d-lg-none me-4">
+                    <h2 class="text-white mb-0">BS</h2>
+                </a>
+                <a href="#" class="sidebar-toggler flex-shrink-0" style="text-decoration: none;">
+                    <i class="fa fa-bars text-light"></i>
+                </a>
+                <!-- <form class="d-none d-md-flex d-sm-flex ms-auto w-50" action="{% url 'redirectPage' %}" method="get">
+                    <input class="form-control bg-light border-0" name="url" type="search" placeholder="Search" required>
+                </form> -->
+                <div class="navbar-nav align-items-center ms-auto">
+
+                    {% if notification %}
+                    <div class="nav-item dropdown">
+                        <a href="#" class="dropdown-toggle text-decoration-none text-white d-flex align-items-center" data-bs-toggle="dropdown">
+                            <i class="fa fa-bell me-lg-2 fs-5 position-relative"></i>
+                            {%if notification %}
+                            <span class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-danger" style="padding: 0.2rem 0.4rem;font-size: 0.5rem;margin-left: 0rem;">!</span>
+                            {% endif %}
+                            <span class="d-none d-lg-inline-flex">Notification</span>
+                        </a>
+                        <div class="notification-dropdown dropdown-menu dropdown-menu-end bg-dark border-0 rounded-0 rounded-bottom m-0">
+                            {% for i in renewals %}
+                            <a href="#" class="dropdown-item my-2">
+                                <h6 class="fw-normal mb-0">"{{i.company.company_name}}" wants to purchase..</h6>
+                                <a href="{% url 'goDemoClients' %}" class="text-decoration-none text-success ms-3">Continue</a>
+                                <!-- <a href="#" class="text-decoration-none text-danger ms-2">Reject</a> -->
+                            </a>
+                            <hr class="dropdown-divider bg-white">
+                            {% endfor %}
+                            <!-- <hr class="dropdown-divider">
+                            <a href="#" class="dropdown-item text-center">See all notifications</a> -->
+                        </div>
+                    </div>
+                    {% endif %}
+
+
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                            <img class="rounded-circle me-lg-2" src="{% static 'assets/img/nouser.jpg' %}" alt="" style="width: 40px; height: 40px;">
+                            <span class="d-none d-lg-inline-flex text-uppercase">ADMIN</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-dark border-0 rounded-0 rounded-bottom m-0">
+                            <!-- <a href="" class="dropdown-item">Profile</a> -->
+                            <!-- <a href="#" class="dropdown-item">Company</a>
+                            <a href="#" class="dropdown-item">Settings</a> -->
+                            <a href="{% url 'userLogout' %}" class="dropdown-item">Log Out</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <!-- Navbar End -->
+
+
+            <!-- Body Start -->
+            <main>
+                {% block content %} {% endblock %}
+            </main>
+            <!-- Body End -->
+
+
+            <!-- Footer Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="bg-dark rounded-top p-4">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 text-center text-sm-start text-white">
+                            &copy; <a href="#" class="text-white">Billing Software</a>, All Right Reserved. 
+                        </div>
+                        <div class="col-12 col-sm-6 text-center text-sm-end">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer End -->
+        </div>
+        <!-- Content End -->
+
+
+        <!-- Back to Top -->
+        <!-- <a href="#" class="btn btn-lg btn-lg-square back-to-top" style="background: var(--primary);color: white;"><i class="bi bi-arrow-up"></i></a> -->
+    </div>
+
+    <!-- JavaScript Libraries -->
+    <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'assets/lib/chart/chart.min.js' %}"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="{% static 'assets/lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'assets/lib/owlcarousel/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'assets/lib/tempusdominus/js/moment.min.js' %}"></script>
+    <script src="{% static 'assets/lib/tempusdominus/js/moment-timezone.min.js' %}"></script>
+    <script src="{% static 'assets/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+    {% block scripts %}{% endblock %}
+
+    {%if messages%} {%for message in messages%} {%if message.tags == "success"%}
+    <script>
+      swal({
+        position: "top-end",
+        icon: "success",
+        title: "{{message}}",
+      });
+    </script>
+    {%elif message.tags == "warning"%}
+    <script>
+      swal({
+        position: "top-end",
+        icon: "warning",
+        title: "{{message}}",
+      });
+    </script>
+    {%elif message.tags == "error"%}
+    <script>
+      swal({
+        position: "top-end",
+        icon: "error",
+        title: "{{message}}",
+      });
+    </script>
+    {%else%}
+    <script>
+      swal({
+        position: "top-end",
+        icon: "info",
+        title: "{{message}}",
+      });
+    </script>
+    {%endif%} {%endfor%} {%endif%}
+</body>
+
+</html>
